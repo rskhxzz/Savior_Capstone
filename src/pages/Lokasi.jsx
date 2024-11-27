@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css"; // Mengimpor CSS untuk Leaflet
+import locationMark from "../assets/images/icons/location-mark.png"
 
 const Lokasi = () => {
   const [userLocation, setUserLocation] = useState(null);
@@ -24,12 +25,12 @@ const Lokasi = () => {
 
   // Lokasi tambahan (contoh dengan lokasi di Surabaya)
   const additionalLocations = [
-    { lat: -7.2504, lng: 112.7688, title: "Tugu Pahlawan" },   // Tugu Pahlawan
-    { lat: -7.2575, lng: 112.7521, title: "Taman Bungkul" },    // Taman Bungkul
-    { lat: -7.2740, lng: 112.7357, title: "Surabaya Zoo" },     // Kebun Binatang Surabaya
-    { lat: -7.2650, lng: 112.7485, title: "House of Sampoerna" }, // House of Sampoerna
-    { lat: -7.2333, lng: 112.7350, title: "Masjid Al-Akbar" },   // Masjid Al-Akbar
-    { lat: -7.2512, lng: 112.7875, title: "Kampung Arab Surabaya" }, // Kampung Arab Surabaya
+    { lat: -7.2504, lng: 112.7688, title: "Bank Sampah Surabaya 1" },   // Tugu Pahlawan
+    { lat: -7.2575, lng: 112.7521, title: "Bank Sampah Surabaya 2" },    // Taman Bungkul
+    { lat: -7.2740, lng: 112.7357, title: "Bank Sampah Surabaya 3" },     // Kebun Binatang Surabaya
+    { lat: -7.2650, lng: 112.7485, title: "Bank Sampah Surabaya 4" }, // House of Sampoerna
+    { lat: -7.2333, lng: 112.7350, title: "Bank Sampah Surabaya 5" },   // Masjid Al-Akbar
+    { lat: -7.2512, lng: 112.7875, title: "Bank Sampah Surabaya 6" }, // Kampung Arab Surabaya
   ];
   
 
@@ -39,7 +40,7 @@ const Lokasi = () => {
 
   // Membuat ikon kustom untuk marker tambahan (berwarna merah)
   const redIcon = L.icon({
-    iconUrl: "../assets/images/icons/icon-location.png", // Ganti dengan URL gambar PNG Anda
+    iconUrl: locationMark, // Ganti dengan URL gambar PNG Anda
     iconSize: [32, 32], // Ukuran ikon
     iconAnchor: [16, 32], // Titik jangkar ikon
     popupAnchor: [0, -32], // Lokasi popup relatif terhadap ikon
