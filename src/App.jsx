@@ -8,12 +8,14 @@ import Pelaporan from './pages/Pelaporan';
 import Chat from './pages/Chat';
 import About from './pages/About';
 import Lokasi from './pages/Lokasi';
+import GridBox from './components/GridBox';
 import { Footers } from './components/Footers';
 
 const Home = () => (
   <>
     <Hero />
     <Features />
+    <GridBox /> {/* Menambahkan GridBox */}
   </>
 );
 

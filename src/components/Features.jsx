@@ -41,7 +41,7 @@ const features = [
 const Features = () => {
   return (
     <div className="py-16 h-screen bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-12">
         <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Our Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
