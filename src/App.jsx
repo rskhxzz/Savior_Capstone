@@ -9,6 +9,8 @@ import Chat from './pages/Chat';
 import About from './pages/About';
 import Lokasi from './pages/Lokasi';
 import GridBox from './components/GridBox';
+import Register from './pages/Register';
+import Login from './pages/Login';
 import { Footers } from './components/Footers';
 
 const Home = () => (
@@ -32,6 +34,8 @@ const App = () => {
           <Route path="/chat" element={<Chat />} /> {/* Halaman chat */}
           <Route path="/about" element={<About />} /> {/* Halaman about */}
           <Route path="/lokasi" element={<Lokasi />} /> {/* Halaman lokasi */}
+          <Route path="/register" element={<Register />} /> {/* Halaman lokasi */}
+          <Route path="/login" element={<Login />} /> {/* Halaman lokasi */}
         </Routes>
         <Footers /> {/* Menambahkan footer */}
       </div>

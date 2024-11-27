@@ -1,0 +1,129 @@
+{
+  "users": [
+    {
+      "id": "5197",
+      "name": "anu",
+      "email": "a@gmail",
+      "password": "123",
+      "alamat": "a",
+      "gender": "",
+      "poin": 69000
+    }
+  ],
+  "bank_sampah": [
+    {
+      "id": "1",
+      "nama": "Bank Sampah Surabaya 1",
+      "lokasi": "Surabaya, Jawa Timur",
+      "jenis_sampah": [
+        "botol_plastik",
+        "besi"
+      ],
+      "harga": {
+        "botol_plastik": 3500,
+        "besi": 5000
+      }
+    },
+    {
+      "id": "2",
+      "nama": "Bank Sampah Surabaya 2",
+      "lokasi": "Surabaya, Jawa Timur",
+      "jenis_sampah": [
+        "botol_plastik",
+        "besi"
+      ],
+      "harga": {
+        "botol_plastik": 3500,
+        "besi": 5000
+      }
+    }
+  ],
+  "toko": [
+    {
+      "id": "1",
+      "nama": "Toko Sembako Surabaya",
+      "alamat": "Jl. Raya No. 1, Surabaya",
+      "bank_sampah_id": 1,
+      "image": "https://example.com/images/toko_sembako_surabaya.jpg",
+      "daftar_barang": [
+        {
+          "id": 1,
+          "nama": "Beras",
+          "stok": 100,
+          "harga": 20000
+        },
+        {
+          "id": 2,
+          "nama": "Telur",
+          "stok": 50,
+          "harga": 15000
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "nama": "Toko Sembako Jakarta",
+      "alamat": "Jl. Raya No. 2, Jakarta",
+      "bank_sampah_id": 2,
+      "image": "https://example.com/images/toko_sembako_surabaya.jpg",
+      "daftar_barang": [
+        {
+          "id": 3,
+          "nama": "Tepung",
+          "stok": 200,
+          "harga": 10000
+        },
+        {
+          "id": 4,
+          "nama": "Gula",
+          "stok": 75,
+          "harga": 12000
+        }
+      ]
+    }
+  ],
+  "pembayaran": [
+    {
+      "id": "1",
+      "total": 35000,
+      "nama_user": "Budi Santoso",
+      "status": "sukses",
+      "jam": "2024-11-27T14:30:00Z",
+      "user_id": 1,
+      "toko_id": 1,
+      "nama_toko": "Toko Sembako Surabaya"
+    },
+    {
+      "id": "2",
+      "total": 50000,
+      "nama_user": "Admin",
+      "status": "menunggu",
+      "jam": "2024-11-28T09:00:00Z",
+      "user_id": 2,
+      "toko_id": 2,
+      "nama_toko": "Toko Sembako Jakarta"
+    }
+  ],
+  "pelaporan": [
+    {
+      "id": "1",
+      "judul": "Masalah Sampah Plastik",
+      "lokasi": "Surabaya",
+      "deskripsi": "Tumpukan sampah plastik di sekitar jalan utama.",
+      "gambar": "url_to_image",
+      "nama_user": "Budi Santoso",
+      "jam": "2024-11-27T15:00:00Z",
+      "status": "dikirim"
+    },
+    {
+      "id": "2",
+      "judul": "Pencemaran Sungai",
+      "lokasi": "Jakarta",
+      "deskripsi": "Pencemaran air sungai dengan limbah industri.",
+      "gambar": "url_to_image",
+      "nama_user": "Admin",
+      "jam": "2024-11-28T10:00:00Z",
+      "status": "ditinjau"
+    }
+  ]
+}
