@@ -1,201 +1,219 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Pastikan Anda menggunakan react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 const Toko = () => {
-  const [userPoints, setUserPoints] = useState(0); // Poin user yang diambil dari API
-  const [userName, setUserName] = useState(''); // Nama user yang login
-  const [selectedToko, setSelectedToko] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [popupMessage, setPopupMessage] = useState('');
-  const [tokoList, setTokoList] = useState([]); // Data toko yang diambil dari API
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Status login
+  const [user, setUser] = useState(null); // Data user yang login
+  const [stores, setStores] = useState([]); // Daftar toko
+  const [selectedStore, setSelectedStore] = useState(null); // Toko yang dipilih
+  const [cart, setCart] = useState([]); // Daftar barang yang dipilih
+  const [totalPoints, setTotalPoints] = useState(0); // Total poin yang dibutuhkan
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Digunakan untuk navigasi
-
-  // Ambil data toko dan data user saat komponen di-mount
+  // Fetch data user dan toko saat komponen dimuat
   useEffect(() => {
-    const userToken = localStorage.getItem('userToken');
-    console.log('User Token:', userToken);  // Log token untuk pengecekan
-
-    if (!userToken) {
-      navigate('/login');
+    // Verifikasi apakah user sudah login
+    const loggedUser = localStorage.getItem('user');
+    if (!loggedUser) {
+      navigate('/login'); // Jika tidak ada user, redirect ke halaman login
       return;
     }
+    const parsedUser = JSON.parse(loggedUser);
+    setUser(parsedUser);
 
-    fetch('http://localhost:5000/users', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.user) {
-          setIsLoggedIn(true);
-          setUserPoints(data.user.poin);
-          setUserName(data.user.name);
-        } else {
-          navigate('/login');  // Jika tidak ada data user, arahkan ke login
-        }
-      })
-      .catch((err) => console.error('Error fetching user data:', err));
+    // Mengambil data toko dari server
+    const fetchStores = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/toko');
+        const data = await response.json();
+        setStores(data);
+      } catch (error) {
+        console.error('Error fetching store data:', error);
+      }
+    };
+
+    fetchStores();
   }, [navigate]);
 
-  const handleAddToCart = (item) => {
-    const itemInCart = cart.find((cartItem) => cartItem.id === item.id);
-    if (itemInCart) {
-      setCart(
-        cart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        ),
-      );
-    } else {
-      setCart([...cart, { ...item, quantity: 1 }]);
-    }
+  // Fungsi untuk memilih toko
+  const handleSelectStore = (store) => {
+    setSelectedStore(store);
+    setCart([]); // Reset cart saat memilih toko baru
   };
 
-  const handleRemoveFromCart = (item) => {
-    const itemInCart = cart.find((cartItem) => cartItem.id === item.id);
-    if (itemInCart?.quantity === 1) {
-      setCart(cart.filter((cartItem) => cartItem.id !== item.id));
-    } else {
-      setCart(
-        cart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        ),
-      );
+  // Fungsi untuk menambah atau mengurangi jumlah barang di keranjang
+  const handleQuantityChange = (itemId, action) => {
+    const newCart = [...cart];
+    const itemIndex = newCart.findIndex((item) => item.id === itemId);
+
+    if (itemIndex !== -1) {
+      if (action === 'increment') {
+        newCart[itemIndex].quantity += 1;
+      } else if (action === 'decrement' && newCart[itemIndex].quantity > 0) {
+        newCart[itemIndex].quantity -= 1;
+      }
+    } else if (action === 'increment') {
+      newCart.push({ id: itemId, quantity: 1 });
     }
+
+    setCart(newCart);
   };
 
+  // Menghitung total poin yang dibutuhkan berdasarkan keranjang
+  const calculateTotalPoints = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      const itemDetails = selectedStore.items.find((i) => i.id === item.id);
+      if (itemDetails) {
+        total += itemDetails.harga * item.quantity;
+      }
+    });
+    setTotalPoints(total);
+  };
+
+  useEffect(() => {
+    if (cart.length > 0 && selectedStore) {
+      calculateTotalPoints();
+    }
+  }, [cart, selectedStore]);
+
+  // Fungsi untuk konfirmasi pembelian
   const handlePurchase = () => {
-    if (!isLoggedIn) {
-      alert('Anda harus login terlebih dahulu!');
-      return;
-    }
+    if (user.poin >= totalPoints) {
+      // Kurangi poin user
+      const updatedUser = { ...user, poin: user.poin - totalPoints };
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
 
-    const totalPoints = cart.reduce((total, item) => total + item.harga * item.quantity, 0);
-    if (userPoints < totalPoints) {
-      alert('Poin Anda tidak mencukupi untuk pembelian ini!');
-      return;
-    }
+      // Update stok barang
+      const updatedStore = { ...selectedStore };
+      cart.forEach((item) => {
+        const storeItem = updatedStore.items.find((i) => i.id === item.id);
+        if (storeItem) {
+          storeItem.stok -= item.quantity;
+        }
+      });
 
-    setUserPoints(userPoints - totalPoints);
-    setPopupMessage(
-      `Pembelian berhasil! Barang bisa diambil di ${selectedToko?.nama}.`
-    );
-    setCart([]); // Reset keranjang belanja setelah pembelian
+      // Simpan perubahan stok ke server
+      const updateStore = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/toko/${selectedStore.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedStore),
+          });
+
+          if (response.ok) {
+            alert('Pembelian berhasil!');
+            setCart([]); // Reset keranjang setelah pembelian
+          } else {
+            alert('Gagal memperbarui stok');
+          }
+        } catch (error) {
+          console.error('Error updating store:', error);
+        }
+      };
+
+      updateStore();
+    } else {
+      alert('Poin Anda tidak mencukupi untuk melakukan pembelian');
+    }
   };
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">Toko</h1>
-      <p className="mb-6">Poin Anda: <span className="font-bold">{userPoints}</span></p>
-      <p className="mb-6">Selamat datang, <span className="font-bold">{userName}</span></p>
+      <h1 className="text-3xl font-bold mb-4">Toko Poin</h1>
+
+      {/* Verifikasi user login */}
+      {user && (
+        <p className="text-xl mb-6">
+          Nama: {user.name}, Poin: {user.poin}
+        </p>
+      )}
 
       {/* Pilih Toko */}
       <div className="mb-6">
-        <label className="block font-semibold mb-2">Pilih Toko:</label>
+        <h2 className="text-2xl font-semibold mb-4">Pilih Toko</h2>
         <select
           className="border p-2 rounded w-full"
-          value={selectedToko?.id || ''}
-          onChange={(e) =>
-            setSelectedToko(tokoList.find((toko) => toko.id === parseInt(e.target.value)))
-          }
+          onChange={(e) => handleSelectStore(stores.find(store => store.id === e.target.value))}
         >
           <option value="">-- Pilih Toko --</option>
-          {tokoList.map((toko) => (
-            <option key={toko.id} value={toko.id}>
-              {toko.nama} - {toko.alamat}
+          {stores.map((store) => (
+            <option key={store.id} value={store.id}>
+              {store.nama} - {store.alamat}
             </option>
           ))}
         </select>
       </div>
 
-      {/* Grid Barang */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-        {selectedToko?.daftar_barang.map((item) => (
-          <div
-            key={item.id}
-            className="border rounded-lg p-4 flex flex-col items-center shadow-md"
-          >
-            <img
-              src={item.image || 'default_image.png'} // Set default image if none exists
-              alt={item.nama}
-              className="w-20 h-20 object-cover mb-4"
-            />
-            <h3 className="text-lg font-semibold">{item.nama}</h3>
-            <p className="text-gray-600 text-sm">Harga: {item.harga} poin</p>
-            <p className="text-gray-600 text-sm">Stok: {item.stok}</p>
-            <div className="flex items-center mt-4 space-x-2">
-              <button
-                className="bg-red-500 text-white px-3 py-1 rounded shadow hover:bg-red-600"
-                onClick={() => handleRemoveFromCart(item)}
-              >
-                -
-              </button>
-              <span className="text-gray-800 font-semibold">
-                {cart.find((cartItem) => cartItem.id === item.id)?.quantity || 0}
-              </span>
-              <button
-                className="bg-green-500 text-white px-3 py-1 rounded shadow hover:bg-green-600"
-                onClick={() => handleAddToCart(item)}
-              >
-                +
-              </button>
+      {/* Tampilkan barang jika toko dipilih */}
+      {selectedStore && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-5">
+          {selectedStore.items.map((item) => (
+            <div key={item.id} className="card shadow rounded-xl overflow-hidden">
+              <img
+                className="w-full h-48 object-cover"
+                src={item.gambar ? item.gambar : "placeholder.jpg"} // Add placeholder image if no image provided
+                alt={item.nama}
+              />
+              <div className="p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">{item.nama}</h3>
+                  <p className="text-gray-600 text-sm">Rp {item.harga.toLocaleString('id-ID')} / kg</p>
+                </div>
+                <div className="flex items-center mt-4 px-12">
+                  <button
+                    className="bg-red-600 text-white px-3 py-1 rounded-md mr-2"
+                    onClick={() => handleQuantityChange(item.id, ' decrement ')}
+                  >
+                    -
+                  </button>
+                  <span className="text-gray-700 font-bold">{cart.find((i) => i.id === item.id)?.quantity || 0}</span>
+                  <button
+                    className="bg-green-400 text-white px-3 py-1 rounded-md"
+                    onClick={() => handleQuantityChange(item.id, ' increment ')}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Struk Belanja */}
-      <div className="border rounded-lg p-4 shadow-md">
-        <h2 className="text-xl font-bold mb-4">Struk Belanja</h2>
-        {cart.length === 0 ? (
-          <p className="text-gray-600">Keranjang belanja kosong.</p>
-        ) : (
-          <ul className="space-y-2">
-            {cart.map((item) => (
-              <li key={item.id} className="flex justify-between">
-                <span>
-                  {item.nama} ({item.quantity})
-                </span>
-                <span>{item.harga * item.quantity} poin</span>
-              </li>
-            ))}
-          </ul>
-        )}
-        <div className="flex justify-between mt-4 font-bold">
-          <span>Total:</span>
-          <span>
-            {cart.reduce((total, item) => total + item.harga * item.quantity, 0)} poin
-          </span>
+          ))}
         </div>
+      )}
+
+      {/* Tampilkan struk */}
+      {cart.length > 0 && (
+        <div className="mt-6 p-4 bg-blue-100 rounded shadow">
+          <h3 className="font-semibold">Struk Pembelian</h3>
+          {cart.map((item) => {
+            const itemDetails = selectedStore.items.find((i) => i.id === item.id);
+            return (
+              itemDetails && (
+                <div key={item.id} className="flex justify-between py-2">
+                  <span>{itemDetails.nama} x{item.quantity}</span>
+                  <span>Rp {(itemDetails.harga * item.quantity).toLocaleString('id-ID')}</span>
+                </div>
+              )
+            );
+          })}
+          <div className="flex justify-between font-semibold">
+            <span>Total:</span>
+            <span>Rp {totalPoints.toLocaleString('id-ID')}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Tombol Beli */}
+      {cart.length > 0 && (
         <button
-          className="bg-blue-500 text-white px-4 py-2 mt-4 rounded shadow hover:bg-blue-600 w-full"
+          className="bg-blue-500 text-white px-4 py-2 rounded shadow mt-6"
           onClick={handlePurchase}
-          disabled={!selectedToko || cart.length === 0}
         >
-          Beli
+          Konfirmasi Pembelian
         </button>
-      </div>
-
-      {/* Popup */}
-      {popupMessage && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-semibold mb-4">{popupMessage}</h2>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600"
-              onClick={() => setPopupMessage('')}
-            >
-              Tutup
-            </button>
-          </div>
-        </div>
       )}
     </div>
   );

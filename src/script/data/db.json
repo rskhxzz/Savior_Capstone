@@ -8,6 +8,14 @@
       "alamat": "a",
       "gender": "",
       "poin": 69000
+    },
+    {
+      "id": "32c4",
+      "name": "user satu",
+      "email": "b@gmail",
+      "password": "1",
+      "alamat": "sana",
+      "gender": "Laki-laki"
     }
   ],
   "bank_sampah": [
@@ -45,18 +53,111 @@
       "alamat": "Jl. Raya No. 1, Surabaya",
       "bank_sampah_id": 1,
       "image": "https://example.com/images/toko_sembako_surabaya.jpg",
-      "daftar_barang": [
+      "items": [
         {
           "id": 1,
           "nama": "Beras",
-          "stok": 100,
-          "harga": 20000
+          "stok": 98,
+          "harga": 20000,
+          "gambar": "https://example.com/images/beras.jpg"
         },
         {
           "id": 2,
           "nama": "Telur",
+          "stok": 49,
+          "harga": 15000,
+          "gambar": "https://example.com/images/telur.jpg"
+        },
+        {
+          "id": 3,
+          "nama": "Minyak Goreng",
           "stok": 50,
-          "harga": 15000
+          "harga": 25000,
+          "gambar": "https://example.com/images/minyak_goreng.jpg"
+        },
+        {
+          "id": 4,
+          "nama": "Mie Instan",
+          "stok": 100,
+          "harga": 3000,
+          "gambar": "https://example.com/images/mie_instan.jpg"
+        },
+        {
+          "id": 5,
+          "nama": "Gula Pasir",
+          "stok": 25,
+          "harga": 12000,
+          "gambar": "https://example.com/images/gula_pasir.jpg"
+        },
+        {
+          "id": 6,
+          "nama": "Kecap Manis",
+          "stok": 30,
+          "harga": 15000,
+          "gambar": "https://example.com/images/kecap_manis.jpg"
+        },
+        {
+          "id": 7,
+          "nama": "Sabun Mandi",
+          "stok": 40,
+          "harga": 10000,
+          "gambar": "https://example.com/images/sabun_mandi.jpg"
+        },
+        {
+          "id": 8,
+          "nama": "Tisu Toilet",
+          "stok": 20,
+          "harga": 18000,
+          "gambar": "https://example.com/images/tisu_toilet.jpg"
+        },
+        {
+          "id": 9,
+          "nama": "Pasta Gigi",
+          "stok": 35,
+          "harga": 12000,
+          "gambar": "https://example.com/images/pasta_gigi.jpg"
+        },
+        {
+          "id": 10,
+          "nama": "Shampo",
+          "stok": 30,
+          "harga": 15000,
+          "gambar": "https://example.com/images/shampo.jpg"
+        },
+        {
+          "id": 11,
+          "nama": "Ikan Sarden",
+          "stok": 25,
+          "harga": 10000,
+          "gambar": "https://example.com/images/ikan_sarden.jpg"
+        },
+        {
+          "id": 12,
+          "nama": "Biskuit",
+          "stok": 50,
+          "harga": 15000,
+          "gambar": "https://example.com/images/biskuit.jpg"
+        },
+        {
+          "id": 13,
+          "nama": "Air Mineral",
+          "stok": 100,
+          "harga": 2000,
+          "gambar": "https://example.com/images/air_mineral.jpg"
+        },
+        {
+          "id": 14,
+          "nama": "Minuman Ringan",
+          "stok": 60,
+          "harga": 3000,
+          "gambar": "https://example.com/images/minuman_ringan.jpg"
+        },
+        {
+          "id": 15,
+          "nama": "Keripik Kentang",
+          "stok": 40,
+          "harga": 12000,
+          "gambar": "https://example.com/images/keripik_kentang.jpg"
         }
       ]
     },
@@ -68,16 +169,109 @@
       "image": "https://example.com/images/toko_sembako_surabaya.jpg",
       "daftar_barang": [
         {
+          "id": 1,
+          "nama": "Beras",
+          "stok": 98,
+          "harga": 20000,
+          "gambar": "https://example.com/images/beras.jpg"
+        },
+        {
+          "id": 2,
+          "nama": "Telur",
+          "stok": 49,
+          "harga": 15000,
+          "gambar": "https://example.com/images/telur.jpg"
+        },
+        {
           "id": 3,
-          "nama": "Tepung",
-          "stok": 200,
-          "harga": 10000
+          "nama": "Minyak Goreng",
+          "stok": 50,
+          "harga": 25000,
+          "gambar": "https://example.com/images/minyak_goreng.jpg"
         },
         {
           "id": 4,
-          "nama": "Gula",
-          "stok": 75,
-          "harga": 12000
+          "nama": "Mie Instan",
+          "stok": 100,
+          "harga": 3000,
+          "gambar": "https://example.com/images/mie_instan.jpg"
+        },
+        {
+          "id": 5,
+          "nama": "Gula Pasir",
+          "stok": 25,
+          "harga": 12000,
+          "gambar": "https://example.com/images/gula_pasir.jpg"
+        },
+        {
+          "id": 6,
+          "nama": "Kecap Manis",
+          "stok": 30,
+          "harga": 15000,
+          "gambar": "https://example.com/images/kecap_manis.jpg"
+        },
+        {
+          "id": 7,
+          "nama": "Sabun Mandi",
+          "stok": 40,
+          "harga": 10000,
+          "gambar": "https://example.com/images/sabun_mandi.jpg"
+        },
+        {
+          "id": 8,
+          "nama": "Tisu Toilet",
+          "stok": 20,
+          "harga": 18000,
+          "gambar": "https://example.com/images/tisu_toilet.jpg"
+        },
+        {
+          "id": 9,
+          "nama": "Pasta Gigi",
+          "stok": 35,
+          "harga": 12000,
+          "gambar": "https://example.com/images/pasta_gigi.jpg"
+        },
+        {
+          "id": 10,
+          "nama": "Shampo",
+          "stok": 30,
+          "harga": 15000,
+          "gambar": "https://example.com/images/shampo.jpg"
+        },
+        {
+          "id": 11,
+          "nama": "Ikan Sarden",
+          "stok": 25,
+          "harga": 10000,
+          "gambar": "https://example.com/images/ikan_sarden.jpg"
+        },
+        {
+          "id": 12,
+          "nama": "Biskuit",
+          "stok": 50,
+          "harga": 15000,
+          "gambar": "https://example.com/images/biskuit.jpg"
+        },
+        {
+          "id": 13,
+          "nama": "Air Mineral",
+          "stok": 100,
+          "harga": 2000,
+          "gambar": "https://example.com/images/air_mineral.jpg"
+        },
+        {
+          "id": 14,
+          "nama": "Minuman Ringan",
+          "stok": 60,
+          "harga": 3000,
+          "gambar": "https://example.com/images/minuman_ringan.jpg"
+        },
+        {
+          "id": 15,
+          "nama": "Keripik Kentang",
+          "stok": 40,
+          "harga": 12000,
+          "gambar": "https://example.com/images/keripik_kentang.jpg"
         }
       ]
     }
