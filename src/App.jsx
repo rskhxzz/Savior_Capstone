@@ -9,7 +9,11 @@ import Chat from './pages/Chat';
 import About from './pages/About';
 import Lokasi from './pages/Lokasi';
 import GridBox from './components/GridBox';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Akun from './pages/Akun';
 import { Footers } from './components/Footers';
+import AuthLayout from './layouts/AuthLayout'; // Import AuthLayout
 
 const Home = () => (
   <>
@@ -23,17 +27,21 @@ const App = () => {
   return (
     <Router> {/* Menambahkan Router di seluruh aplikasi */}
       <div className="font-sans">
-        <Navbars />
         <Routes> {/* Menambahkan routing */}
-          <Route path="/" element={<Home />} /> {/* Halaman Home */}
-          <Route path="/bank-sampah" element={<BankSampah />} /> {/* Halaman Bank Sampah */}
-          <Route path="/toko" element={<Toko />} /> {/* Halaman Toko */}
-          <Route path="/pelaporan" element={<Pelaporan />} /> {/* Halaman Pelaporan */}
-          <Route path="/chat" element={<Chat />} /> {/* Halaman chat */}
-          <Route path="/about" element={<About />} /> {/* Halaman about */}
-          <Route path="/lokasi" element={<Lokasi />} /> {/* Halaman lokasi */}
+          {/* Halaman yang membutuhkan Navbar dan Footer */}
+          <Route path="/" element={<><Navbars /><Home /><Footers /></>} />
+          <Route path="/bank-sampah" element={<><Navbars /><BankSampah /><Footers /></>} />
+          <Route path="/toko" element={<><Navbars /><Toko /><Footers /></>} />
+          <Route path="/pelaporan" element={<><Navbars /><Pelaporan /><Footers /></>} />
+          <Route path="/chat" element={<><Navbars /><Chat /><Footers /></>} />
+          <Route path="/about" element={<><Navbars /><About /><Footers /></>} />
+          <Route path="/akun" element={<><Navbars /><Akun /><Footers /></>} />
+          <Route path="/lokasi" element={<><Navbars /><Lokasi /><Footers /></>} />
+
+          {/* Halaman yang tidak membutuhkan Navbar dan Footer */}
+          <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
+          <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
         </Routes>
-        <Footers /> {/* Menambahkan footer */}
       </div>
     </Router>
   );
