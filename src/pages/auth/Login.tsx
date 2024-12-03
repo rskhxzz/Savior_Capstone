@@ -13,7 +13,7 @@ const Login = () => {
 
         try {
             // Send the login request
-            const response = await axios.post('http://localhost:5000/login', {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
                 email,
                 password,
             });
@@ -22,13 +22,13 @@ const Login = () => {
 
             console.log('Login response:', response.data);
 
-            if (message === 'Login successful') {
-                // Save token to local storage
+            if (message === 'Login successful.') {
+                // Save token and user data to local storage
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('user', JSON.stringify(user));
 
                 // Display success message with user's name
-                toast.success(`Selamat datang ${user.nama_user}!`);
+                toast.success(`Selamat datang ${user.name}!`);
 
                 // Redirect after 2 seconds
                 setTimeout(() => {
@@ -40,16 +40,15 @@ const Login = () => {
 
             // Check if error has a response from the server
             if (error.response && error.response.data) {
-                // Check the specific error message sent by the server
-                if (error.response.data.error === 'pengguna tidak ditemukan') {
+                const { error: errorMessage } = error.response.data;
+                if (errorMessage === 'User not found.') {
                     toast.error('Email tidak ditemukan. Silakan periksa kembali.');
-                } else if (error.response.data.error === 'Password salah') {
+                } else if (errorMessage === 'Invalid credentials.') {
                     toast.error('Password Anda salah. Silakan coba lagi.');
                 } else {
                     toast.error('Login gagal. Silakan coba lagi.');
                 }
             } else {
-                // If no response from server or any other error
                 toast.error('Login gagal. Silakan coba lagi.');
             }
         }
@@ -59,7 +58,7 @@ const Login = () => {
         <div className="flex flex-col h-screen w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto my-20 px-20 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl shadow-xl">
             <div className="flex flex-col justify-center mx-auto items-center gap-3 pb-4">
                 <div>
-                    <img src="src\\assets\\savior-icon.png" alt="Logo" width="100" />
+                    <img src="src/assets/savior-icon.png" alt="Logo" width="100" />
                 </div>
                 <h1 className="text-3xl font-bold text-[#4B5563] my-auto">SAVIOR</h1>
             </div>
@@ -69,7 +68,7 @@ const Login = () => {
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-[#111827]">Email</label>
                     <div className="relative text-gray-400">
                         <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-mail">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <rect width="20" height="16" x="2" y="4" rx="2" />
                                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                             </svg>
@@ -89,7 +88,7 @@ const Login = () => {
                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-[#111827]">Password</label>
                     <div className="relative text-gray-400">
                         <span className="absolute inset-y-0 left-0 flex items-center p-1 pl-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square-asterisk">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <rect width="18" height="18" x="3" y="3" rx="2" />
                                 <path d="M12 8v8" />
                                 <path d="m8.5 14 7-4" />
