@@ -1,45 +1,6 @@
 import { useState } from 'react';
-import { Groq } from 'groq-sdk';
 
-const GROQ_API = import.meta.env.VITE_GROQ_API;
-
-const groq = new Groq({
-  apiKey: GROQ_API,
-  dangerouslyAllowBrowser: true,
-});
-
-const requestToGroqAi = async (content) => {
-  const reply = await groq.chat.completions.create({
-    messages: [
-      { role: 'system', content: 'Harap berikan jawaban dalam bahasa Indonesia.' },
-      { role: 'user', content },
-    ],
-    model: 'gemma-7b-it',
-  });
-  return reply.choices[0].message.content;
-};
-
-const formatText = (text) => {
-  let formattedText = text.split('\n').map((item, index) => {
-    // Menangani teks yang diawali dan diakhiri dengan ** untuk membuatnya tebal
-    if (item.startsWith('**') && item.endsWith('**')) {
-      item = `<strong>${item.slice(2, -2)}</strong>`;
-    }
-
-    // Menangani teks yang diawali dan diakhiri dengan * untuk membuatnya menjadi list item
-    if (item.startsWith('*')) {
-      item = `<li>${item.slice(1)}</li>`;
-    }
-
-    // Menambahkan <br> untuk setiap baris
-    return `<span key=${index}>${item}<br /></span>`;
-  }).join('');
-
-  // Membungkus seluruh teks dalam <ul> jika ada item list
-  formattedText = formattedText.replace(/<li>.*?<\/li>/g, match => `<ol>${match}</ol>`);
-
-  return formattedText;
-};
+import { requestToGroqAi, formatText } from '../../script/utils/ChatHandler';
 
 const Chat = () => {
   const [content, setContent] = useState(''); // State untuk input
@@ -54,31 +15,42 @@ const Chat = () => {
     const ai = await requestToGroqAi(content); // Menggunakan state content untuk mendapatkan jawaban AI
 
     // Menyimpan jawaban AI ke dalam histori percakapan
-    setMessages(prevMessages => [
+    setMessages((prevMessages) => [
       ...prevMessages,
-      { role: 'ai', content: ai }
+      { role: 'ai', content: ai },
     ]);
 
     setContent(''); // Reset input setelah submit
   };
 
   return (
-    <main className="flex flex-col min-h-screen justify-end items-center bg-white py-1 border-2">
+    <main className="flex flex-col min-h-screen justify-end items-center bg-white py-1 border-2 px-8">
       <h1 className="text-3xl font-bold text-green-600 mb-1">Hi Savior</h1>
-      <p className="text-md  text-green-700 mb-1">punya pertanyaan terkait lingkungan? tanyakan Hi savior</p>
- 
+      <p className="text-md text-green-700 mb-1">
+        punya pertanyaan terkait lingkungan? tanyakan Hi savior
+      </p>
+
       <div
-        className="flex flex-col w-full space-y-4 overflow-y-auto p-4 bg-white"
+        className="flex flex-col w-full space-y-4 overflow-y-auto p-4 bg-gray-50"
         style={{
           height: '70vh',
-          overflowY: 'scroll', 
+          overflowY: 'scroll',
         }}
       >
         {/* Menampilkan histori percakapan */}
         {messages.map((message, index) => (
-          <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div
+            key={index}
+            className={`flex ${
+              message.role === 'user' ? 'justify-end' : 'justify-start'
+            }`}
+          >
             <div
-              className={`max-w-sm p-3 rounded-lg ${message.role === 'user' ? 'bg-green-500 text-white' : 'bg-gray-100 text-black'}`}
+              className={`max-w-sm p-3 rounded-lg ${
+                message.role === 'user'
+                  ? 'bg-green-500 text-white'
+                  : 'bg-gray-100 text-black'
+              }`}
               dangerouslySetInnerHTML={{
                 __html: formatText(message.content),
               }}
@@ -88,14 +60,17 @@ const Chat = () => {
       </div>
 
       {/* Box untuk input dan button */}
-      <div className="w-full bg-white p-4 ">
-        <form className="flex items-center gap-2 w-full bg-white p-4" onSubmit={handleSubmit}>
+      <div className="w-full bg-white p-4">
+        <form
+          className="flex items-center gap-2 w-full bg-white p-4"
+          onSubmit={handleSubmit}
+        >
           <input
             placeholder="Tanyakan pertanyaanmu tentang lingkungan"
             className="border-2 border-green-500 rounded-lg px-4 py-2 text-md focus:outline-none focus:ring-1 focus:ring-green-500 w-full"
             id="content"
             value={content}
-            onChange={(e) => setContent(e.target.value)} 
+            onChange={(e) => setContent(e.target.value)}
           />
 
           <button
