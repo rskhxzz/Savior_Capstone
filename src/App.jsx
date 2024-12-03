@@ -30,11 +30,11 @@ const ProtectedRoute = ({children}) => {
 
 // Home component
 const Home = () => (
-  <>
+  <div className='flex flex-col gap-8'>
     <Hero />
     <Features />
     <GridBox /> {/* Menambahkan GridBox */}
-  </>
+  </div>
 );
 
 const App = () => {

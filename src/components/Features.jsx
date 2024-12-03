@@ -40,7 +40,7 @@ const features = [
 
 const Features = () => {
   return (
-    <div className="py-16 max-h-screen bg-white">
+    <div className="bg-white flex">
       <div className="container mx-auto px-12">
         <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Temukan Fitur Kami</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

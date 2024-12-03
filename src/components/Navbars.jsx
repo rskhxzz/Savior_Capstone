@@ -44,8 +44,8 @@ const Navbars = () => {
           </svg>
         </button>
         <ul
-          className={`md:flex space-x-6 text-gray-700 font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center transition-all duration-300 ease-in-out ${
-            isOpen ? 'block' : 'hidden'
+          className={`md:flex space-x-6 text-gray-700 font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50  ${
+            isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'
           }`}
         >
           <li>

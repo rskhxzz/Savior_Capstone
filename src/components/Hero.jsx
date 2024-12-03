@@ -2,11 +2,11 @@ import HeroImage from '../assets/images/hero/hero.png'; // Pastikan path-nya ben
 
 const Hero = () => {
   return (
-    <div className="relative w-full h-screen bg-gray-100">
+    <div className="relative w-full  bg-gray-100 z-20">
       <img
         src={HeroImage}
         alt="Hero Image"
-        className="w-full h-full object-cover"
+        className="w-full object-cover"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-shadow">
         <h1 className="text-4xl font-bold text-white mb-4">SAVIOR</h1>

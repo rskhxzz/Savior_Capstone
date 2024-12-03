@@ -7,7 +7,7 @@ import imageGrid4 from '../assets/images/grid-images/4.png';
 // Tambahkan keyframe animasi untuk teks
 const GridBox = () => {
   return (
-    <div className="mt-8 max-h-screen">
+    <div className="flex">
       <div className="bg-white p-8 rounded-lg shadow-md">
         {/* Ajakan */}
         <div className="text-center mb-8">
