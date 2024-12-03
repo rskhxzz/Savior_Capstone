@@ -29,8 +29,7 @@ const Lokasi = () => {
     { lat: -7.2575, lng: 112.7521, title: "Bank Sampah Surabaya 2" },    // Taman Bungkul
     { lat: -7.2740, lng: 112.7357, title: "Bank Sampah Surabaya 3" },     // Kebun Binatang Surabaya
     { lat: -7.2650, lng: 112.7485, title: "Bank Sampah Surabaya 4" }, // House of Sampoerna
-    { lat: -7.2333, lng: 112.7350, title: "Bank Sampah Surabaya 5" },   // Masjid Al-Akbar
-    { lat: -7.2512, lng: 112.7875, title: "Bank Sampah Surabaya 6" }, // Kampung Arab Surabaya
+
   ];
   
 

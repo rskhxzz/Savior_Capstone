@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -11,22 +12,46 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            // Ambil data pengguna dari API atau database
-            const response = await axios.get('http://localhost:5000/users');
-            const user = response.data.find(
-                (user) => user.email === email && user.password === password
-            );
+            // Send the login request
+            const response = await axios.post('http://localhost:5000/login', {
+                email,
+                password,
+            });
 
-            if (user) {
-                alert(`Welcome, ${user.name}!`);
-                // Menyimpan status login ke localStorage
+            const { message, token, user } = response.data;
+
+            console.log('Login response:', response.data);
+
+            if (message === 'Login successful') {
+                // Save token to local storage
+                localStorage.setItem('authToken', token);
                 localStorage.setItem('user', JSON.stringify(user));
-                navigate('/'); // Redirect ke halaman home setelah login
-            } else {
-                alert('Invalid email or password!');
+
+                // Display success message with user's name
+                toast.success(`Selamat datang ${user.nama_user}!`);
+
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    navigate('/akun');
+                }, 2000); // 2-second delay
             }
         } catch (error) {
             console.error('Error logging in:', error);
+
+            // Check if error has a response from the server
+            if (error.response && error.response.data) {
+                // Check the specific error message sent by the server
+                if (error.response.data.error === 'pengguna tidak ditemukan') {
+                    toast.error('Email tidak ditemukan. Silakan periksa kembali.');
+                } else if (error.response.data.error === 'Password salah') {
+                    toast.error('Password Anda salah. Silakan coba lagi.');
+                } else {
+                    toast.error('Login gagal. Silakan coba lagi.');
+                }
+            } else {
+                // If no response from server or any other error
+                toast.error('Login gagal. Silakan coba lagi.');
+            }
         }
     };
 
@@ -34,7 +59,7 @@ const Login = () => {
         <div className="flex flex-col h-screen w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto my-20 px-20 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl shadow-xl">
             <div className="flex flex-col justify-center mx-auto items-center gap-3 pb-4">
                 <div>
-                    <img src="src\assets\savior-icon.png" alt="Logo" width="100" />
+                    <img src="src\\assets\\savior-icon.png" alt="Logo" width="100" />
                 </div>
                 <h1 className="text-3xl font-bold text-[#4B5563] my-auto">SAVIOR</h1>
             </div>

@@ -7,15 +7,7 @@
       "password": "123",
       "alamat": "a",
       "gender": "",
-      "poin": 69000
-    },
-    {
-      "id": "32c4",
-      "name": "user satu",
-      "email": "b@gmail",
-      "password": "1",
-      "alamat": "sana",
-      "gender": "Laki-laki"
+      "poin": 86500
     }
   ],
   "bank_sampah": [
@@ -44,6 +36,45 @@
         "botol_plastik": 3500,
         "besi": 5000
       }
+    },
+    {
+      "id": "3",
+      "nama": "Bank Sampah Surabaya 3",
+      "lokasi": "Surabaya, Jawa Timur",
+      "jenis_sampah": [
+        "botol_plastik",
+        "besi"
+      ],
+      "harga": {
+        "botol_plastik": 3500,
+        "besi": 5000
+      }
+    },
+    {
+      "id": "2",
+      "nama": "Bank Sampah Surabaya 4",
+      "lokasi": "Surabaya, Jawa Timur",
+      "jenis_sampah": [
+        "botol_plastik",
+        "besi"
+      ],
+      "harga": {
+        "botol_plastik": 3500,
+        "besi": 5000
+      }
+    },
+    {
+      "id": "2",
+      "nama": "Bank Sampah Surabaya 5",
+      "lokasi": "Surabaya, Jawa Timur",
+      "jenis_sampah": [
+        "botol_plastik",
+        "besi"
+      ],
+      "harga": {
+        "botol_plastik": 3500,
+        "besi": 5000
+      }
     }
   ],
   "toko": [
@@ -52,112 +83,42 @@
       "nama": "Toko Sembako Surabaya",
       "alamat": "Jl. Raya No. 1, Surabaya",
       "bank_sampah_id": 1,
-      "image": "https://example.com/images/toko_sembako_surabaya.jpg",
+      "image": "https://res.cloudinary.com/dzev0az08/image/upload/t_t1/v1733017927/toko1_drns4j.jpg",
       "items": [
         {
           "id": 1,
           "nama": "Beras",
           "stok": 98,
           "harga": 20000,
-          "gambar": "https://example.com/images/beras.jpg"
+          "gambar": "https://res.cloudinary.com/dzev0az08/image/upload/t_t1/v1733016791/95af56b5-35e6-4adc-a8a6-d5af87a5c0d4.png"
         },
         {
           "id": 2,
           "nama": "Telur",
           "stok": 49,
           "harga": 15000,
-          "gambar": "https://example.com/images/telur.jpg"
+          "gambar": "https://res.cloudinary.com/dzev0az08/image/upload/t_t1/v1733016858/25970822-4564-48a6-b278-a7e4d42f20ca.png"
         },
         {
           "id": 3,
           "nama": "Minyak Goreng",
           "stok": 50,
           "harga": 25000,
-          "gambar": "https://example.com/images/minyak_goreng.jpg"
+          "gambar": "https://res.cloudinary.com/dzev0az08/image/upload/t_t1/v1733016901/2ad79918-9154-418c-aad1-8fe2f3ae9675.png"
         },
         {
           "id": 4,
-          "nama": "Mie Instan",
+          "nama": "Tepung Terigu 1kg",
           "stok": 100,
           "harga": 3000,
-          "gambar": "https://example.com/images/mie_instan.jpg"
+          "gambar": "https://res.cloudinary.com/dzev0az08/image/upload/v1733017097/3554e8fc-50cc-48fd-8058-2c7bc309f4da.png"
         },
         {
           "id": 5,
           "nama": "Gula Pasir",
           "stok": 25,
           "harga": 12000,
-          "gambar": "https://example.com/images/gula_pasir.jpg"
-        },
-        {
-          "id": 6,
-          "nama": "Kecap Manis",
-          "stok": 30,
-          "harga": 15000,
-          "gambar": "https://example.com/images/kecap_manis.jpg"
-        },
-        {
-          "id": 7,
-          "nama": "Sabun Mandi",
-          "stok": 40,
-          "harga": 10000,
-          "gambar": "https://example.com/images/sabun_mandi.jpg"
-        },
-        {
-          "id": 8,
-          "nama": "Tisu Toilet",
-          "stok": 20,
-          "harga": 18000,
-          "gambar": "https://example.com/images/tisu_toilet.jpg"
-        },
-        {
-          "id": 9,
-          "nama": "Pasta Gigi",
-          "stok": 35,
-          "harga": 12000,
-          "gambar": "https://example.com/images/pasta_gigi.jpg"
-        },
-        {
-          "id": 10,
-          "nama": "Shampo",
-          "stok": 30,
-          "harga": 15000,
-          "gambar": "https://example.com/images/shampo.jpg"
-        },
-        {
-          "id": 11,
-          "nama": "Ikan Sarden",
-          "stok": 25,
-          "harga": 10000,
-          "gambar": "https://example.com/images/ikan_sarden.jpg"
-        },
-        {
-          "id": 12,
-          "nama": "Biskuit",
-          "stok": 50,
-          "harga": 15000,
-          "gambar": "https://example.com/images/biskuit.jpg"
-        },
-        {
-          "id": 13,
-          "nama": "Air Mineral",
-          "stok": 100,
-          "harga": 2000,
-          "gambar": "https://example.com/images/air_mineral.jpg"
-        },
-        {
-          "id": 14,
-          "nama": "Minuman Ringan",
-          "stok": 60,
-          "harga": 3000,
-          "gambar": "https://example.com/images/minuman_ringan.jpg"
-        },
-        {
-          "id": 15,
-          "nama": "Keripik Kentang",
-          "stok": 40,
-          "harga": 12000,
-          "gambar": "https://example.com/images/keripik_kentang.jpg"
+          "gambar": "https://res.cloudinary.com/dzev0az08/image/upload/v1733016901/2ad79918-9154-418c-aad1-8fe2f3ae9675.png"
         }
       ]
     },
@@ -296,6 +257,16 @@
       "user_id": 2,
       "toko_id": 2,
       "nama_toko": "Toko Sembako Jakarta"
+    }
+  ],
+  "penukaran": [
+    {
+      "id": "1",
+      "total_sampah": 10,
+      "jenis_sampah": "botol_plastik",
+      "total_poin": 50000,
+      "status_transaksi": "menunggu",
+      "tanggal_transaksi": "2024-12-01T12:00:00"
     }
   ],
   "pelaporan": [
