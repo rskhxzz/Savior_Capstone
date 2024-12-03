@@ -8,31 +8,31 @@ import locationIcon from '../assets/images/icons/location-icon.png';
 const features = [
   { 
     title: 'Bank Sampah', 
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
+    description: 'Tukarkan sampahmu untuk dijadikan uang digital disini', 
     icon: bankSampahIcon,
-    path: '/bank-sampah', // Path untuk halaman Bank Sampah
+    path: '/bank-sampah',
   },
   { 
-    title: 'Toko', 
-    description: 'Duis sed dapibus leo nec ornare diam sed commodo nibh.', 
+    title: 'Savior Shop', 
+    description: 'Toko penukaran uang digital menjadi sembako ', 
     icon: storesIcon,
-    path: '/toko', // Path untuk halaman Toko
+    path: '/toko',
   },
   { 
-    title: 'Pelaporan', 
-    description: 'Ante facilisis bibendum lorem ipsum dolor sit amet.', 
+    title: 'Savior Report', 
+    description: 'Laporkan masalah sampah maupun pencermaran', 
     icon: reportIcon,
     path: '/pelaporan', // Path untuk halaman Pelaporan
   },
   { 
     title: 'Chat', 
-    description: 'Ante facilisis bibendum lorem ipsum dolor sit amet.', 
+    description: 'Tanyakan masalah sampah maupun lingkungan disini', 
     icon: chatIcon,
     path: '/chat', // Path untuk halaman Pelaporan
   },
   { 
     title: 'Lokasi', 
-    description: 'Ante facilisis bibendum lorem ipsum dolor sit amet.', 
+    description: 'Disini adalah lokasi dari bank sampah', 
     icon: locationIcon,
     path: '/lokasi', // Path untuk halaman Pelaporan
   },
@@ -40,9 +40,9 @@ const features = [
 
 const Features = () => {
   return (
-    <div className="py-16 h-screen bg-white">
+    <div className="py-16 max-h-screen bg-white">
       <div className="container mx-auto px-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Our Features</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">Temukan Fitur Kami</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <Link to={feature.path} key={index} className="block">

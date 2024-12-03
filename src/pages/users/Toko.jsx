@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getTokoData } from '../script/data/api-endpoint';
+import { getTokoData } from '../../script/data/api-endpoint';
 
 const Toko = () => {
   const [dataToko, setDataToko] = useState([]);

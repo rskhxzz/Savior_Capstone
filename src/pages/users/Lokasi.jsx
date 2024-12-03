@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css"; // Mengimpor CSS untuk Leaflet
-import locationMark from "../assets/images/icons/location-mark.png"
+import locationMark from "../../assets/images/icons/location-mark.png"
 
 const Lokasi = () => {
   const [userLocation, setUserLocation] = useState(null);
