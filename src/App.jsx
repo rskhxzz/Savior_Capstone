@@ -2,19 +2,19 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Navbars from './components/Navbars';
 import Hero from './components/Hero';
 import Features from './components/Features';
-import BankSampah from './pages/BankSampah'; // Halaman untuk fitur Bank Sampah
-import Toko from './pages/Toko'; // Halaman untuk fitur Toko
-import Pelaporan from './pages/pelaporan';
-import Chat from './pages/Chat';
-import About from './pages/About';
-import Lokasi from './pages/Lokasi';
+import BankSampah from './pages/users/BankSampah'; // Halaman untuk fitur Bank Sampah
+import Toko from './pages/users/Toko'; // Halaman untuk fitur Toko
+import Pelaporan from './pages/users/Pelaporan';
+import Chat from './pages/users/Chat';
+import About from './pages/users/About';
+import Lokasi from './pages/users/Lokasi';
 import GridBox from './components/GridBox';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Akun from './pages/Akun';
+import Register from './pages/auth/Register';
+import Login from './pages/auth/Login';
+import Akun from './pages/users/Akun';
 import { Footers } from './components/Footers';
 import AuthLayout from './layouts/AuthLayout'; // Import AuthLayout
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/users/Dashboard';
 
 // Define ProtectedRoute component
 // eslint-disable-next-line react/prop-types
@@ -66,7 +66,7 @@ const App = () => {
 
           <Route path="/chat" element={
             <ProtectedRoute>
-              <><Navbars /><Chat /><Footers /></>
+              <><Navbars /><Chat /></>
             </ProtectedRoute>
           } />
 
