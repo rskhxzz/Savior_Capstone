@@ -47,13 +47,13 @@ const Register = () => {
     <div className="flex flex-col w-full md:w-1/2 xl:w-2/5 mx-auto px-10 my-20 bg-white rounded-2xl shadow-xl">
       <div className="flex flex-col justify-center items-center gap-3 pb-4">
         <h1 className="text-3xl font-bold text-gray-700">Register</h1>
-        <p className="text-sm text-gray-500">Create your account</p>
+        <p className="text-sm text-gray-500">Buat akun baru</p>
       </div>
 
       {error && <div className="text-sm text-red-500 mb-4">{error}</div>}
 
       <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label className="block text-sm font-medium text-gray-700">Name</label>
+        <label className="block text-sm font-medium text-gray-700">nama</label>
         <input
           type="text"
           name="name"
@@ -83,7 +83,7 @@ const Register = () => {
           required
         />
 
-        <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+        <label className="block text-sm font-medium text-gray-700">Nomor Telepon</label>
         <input
           type="text"
           name="phoneNumber"
@@ -92,7 +92,7 @@ const Register = () => {
           className="mb-4 p-2 border rounded-lg"
         />
 
-        <label className="block text-sm font-medium text-gray-700">Address</label>
+        <label className="block text-sm font-medium text-gray-700">Alamat</label>
         <input
           type="text"
           name="address"
@@ -101,7 +101,7 @@ const Register = () => {
           className="mb-4 p-2 border rounded-lg"
         />
 
-        <label className="block text-sm font-medium text-gray-700">Age</label>
+        <label className="block text-sm font-medium text-gray-700">Umur</label>
         <input
           type="number"
           name="age"
@@ -110,7 +110,7 @@ const Register = () => {
           className="mb-4 p-2 border rounded-lg"
         />
 
-        <label className="block text-sm font-medium text-gray-700">Gender</label>
+        <label className="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
         <div className="flex items-center gap-4 mb-4">
           <label>
             <input
@@ -143,7 +143,7 @@ const Register = () => {
       </form>
 
       <p className="text-sm text-gray-500 text-center mt-4">
-        Already have an account?{' '}
+        Sudah punya akun?{' '}
         <a href="/login" className="text-green-500 font-medium">
           Login
         </a>

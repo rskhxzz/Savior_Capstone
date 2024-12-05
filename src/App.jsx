@@ -9,16 +9,16 @@ import Chat from './pages/users/Chat';
 import About from './pages/users/About';
 import Lokasi from './pages/users/Lokasi';
 import GridBox from './components/GridBox';
+import Steps from './components/Steps';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import Akun from './pages/users/Akun';
 import { Footers } from './components/Footers';
 import AuthLayout from './layouts/AuthLayout'; // Import AuthLayout
-import Dashboard from './pages/users/Dashboard';
 
 // Define ProtectedRoute component
 // eslint-disable-next-line react/prop-types
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('authToken');
 
   if (!token) {
@@ -33,6 +33,7 @@ const Home = () => (
   <div className='flex flex-col gap-8'>
     <Hero />
     <Features />
+    <Steps />
     <GridBox /> {/* Menambahkan GridBox */}
   </div>
 );
@@ -80,12 +81,6 @@ const App = () => {
           <Route path="/lokasi" element={
             <ProtectedRoute>
               <><Navbars /><Lokasi /><Footers /></>
-            </ProtectedRoute>
-          } />
-
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <><Dashboard /></>
             </ProtectedRoute>
           } />
 

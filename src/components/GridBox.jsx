@@ -12,14 +12,12 @@ const GridBox = () => {
         {/* Ajakan */}
         <div className="text-center mb-8">
           <h1
-            className="text-3xl font-bold text-green-700 animate__animated animate__fadeIn"
-            style={{ animationDelay: '0.3s' }} // Animasi fadeIn dengan delay
+            className="text-3xl font-bold text-green-700"
           >
             Bergabunglah Menjadi Fake Agent
           </h1>
           <p
-            className="text-gray-600 animate__animated animate__fadeIn"
-            style={{ animationDelay: '0.6s' }} // Animasi fadeIn dengan delay
+            className="text-gray-600"
           >
             Daur ulang sampahmu untuk membuat bumi bahagia 🌍
           </p>
