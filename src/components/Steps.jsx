@@ -1,69 +1,51 @@
-import { useState } from 'react';
-
-const stepsData = [
-    {
-        id: 1,
-        title: "Bagaimana cara melakukan penukaran sampah?",
-        description: [
-            "Datang ke bank sampah.",
-            "Kunjungi halaman bank sampah pada web.",
-            "Isi pilih nama bank sampah yang sesuai.",
-            "Pilih jenis sampah.",
-            "Masukkan berat sampah yang tertera pada mesin.",
-            "Klik hitung.",
-            "Kemudian klik kirim.",
-            "Ingat ya jika berat sampah yang dimasukkan tidak sesuai maka akan langsung tertolak.",
-        ],
-        color: "bg-blue-500",
-    },
-    {
-        id: 2,
-        title: "Cara pembelian sembako dengan uang digital?",
-        description: [
-            "Datang ke toko yang sudah bekerja sama dengan kami.",
-            "Kunjungi halaman toko pada web.",
-            "Pilih toko yang dituju.",
-            "Pilih barang yang akan dibeli.",
-            "Klik checkout.",
-            "Pihak toko akan segera menyiapkan barangnya.",
-            "Terus kita ambil.",
-            "Untuk pembelian bisa dilakukan dimana saja yaa. Namun ketika ingin mengambil barang tetap harus ke toko ya.",
-        ],
-        color: "bg-pink-500",
-    },
-];
-
-
-function StepCard({ step }) {
-    return (
-        <div
-            className={`flex flex-col p-4 rounded-lg shadow-md text-white ${step.color} mb-4`}
-        >
-            <div className="flex items-center mb-2">
-                <div className="w-4 h-4 rounded-full bg-white mr-4"></div>
-                <h3 className="text-lg font-bold">{step.title}</h3>
-            </div>
-            <ul className="ml-8 list-disc">
-                {step.description.map((desc, index) => (
-                    <li key={index} className="text-sm">
-                        {desc}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
+import { Carousel } from "flowbite-react";
 
 function Steps() {
     return (
-        <div className="flex overflow-x-scroll snap-x p-4 space-x-4">
-            {stepsData.map((step) => (
-                <div key={step.id} className="snap-center">
-                    <StepCard step={step} />
+        <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+            <Carousel className="max-w-[80vw] mx-auto">
+                {/* Slide 1 */}
+                <div className="flex flex-col justify-center items-center text-white bg-blue-500 rounded-lg  h-full  ">
+                    <h2 className="text-xl font-bold mb-4">
+                        Bagaimana cara melakukan penukaran sampah?
+                    </h2>
+                    <ul className="list-disc text-left space-y-2">
+                        <li>Datang ke bank sampah.</li>
+                        <li>Kunjungi halaman bank sampah pada web.</li>
+                        <li>Isi pilih nama bank sampah yang sesuai.</li>
+                        <li>Pilih jenis sampah.</li>
+                        <li>Masukkan berat sampah yang tertera pada mesin.</li>
+                        <li>Klik hitung.</li>
+                        <li>Kemudian klik kirim.</li>
+                        <li>
+                            Ingat ya jika berat sampah yang dimasukkan tidak sesuai maka akan
+                            langsung tertolak.
+                        </li>
+                    </ul>
                 </div>
-            ))}
+
+                {/* Slide 2 */}
+                <div className="flex flex-col justify-center items-center text-white bg-[#478336] rounded-lg h-full max-w-[80vw] mx-auto">
+                    <h2 className="text-xl font-bold mb-4">
+                        Cara pembelian sembako dengan uang digital?
+                    </h2>
+                    <ul className="list-disc text-left space-y-2">
+                        <li>Datang ke toko yang sudah bekerja sama dengan kami.</li>
+                        <li>Kunjungi halaman toko pada web.</li>
+                        <li>Pilih toko yang dituju.</li>
+                        <li>Pilih barang yang akan dibeli.</li>
+                        <li>Klik checkout.</li>
+                        <li>Pihak toko akan segera menyiapkan barangnya.</li>
+                        <li>Terus kita ambil.</li>
+                        <li>
+                            Untuk pembelian bisa dilakukan dimana saja yaa. Namun ketika ingin
+                            mengambil barang tetap harus ke toko ya.
+                        </li>
+                    </ul>
+                </div>
+            </Carousel>
         </div>
-    );
+    )
 }
 
-export default Steps;
+export default Steps
