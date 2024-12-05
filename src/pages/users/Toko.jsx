@@ -37,7 +37,7 @@ const Toko = () => {
       // Jika barang belum ada di keranjang, tambahkan ke keranjang
       setCart([...cart, { ...barang, quantity: 1 }]);
     }
-    setTotalPrice((prev) => prev + barang.harga_barang); // Update total harga
+    setTotalPrice((prev) => prev + barang.harga); // Update total harga
   };
 
   const handleRemoveFromCart = (barang) => {
@@ -51,11 +51,11 @@ const Toko = () => {
             : item
         )
       );
-      setTotalPrice((prev) => prev - barang.harga_barang); // Update total harga
+      setTotalPrice((prev) => prev - barang.harga); // Update total harga
     } else {
       // Jika jumlah barang 1, hapus barang dari keranjang
       setCart(cart.filter((item) => item._id !== barang._id));
-      setTotalPrice((prev) => prev - barang.harga_barang); // Update total harga
+      setTotalPrice((prev) => prev - barang.harga); // Update total harga
     }
   };
 
@@ -75,12 +75,12 @@ const Toko = () => {
           >
             {/* Card Toko */}
             <img
-              src={toko.imageUrl_toko}
-              alt={toko.nama_toko}
+              src={toko.imageUrl}
+              alt={toko.nama}
               className="w-full h-48 object-cover rounded-lg mb-4"
             />
-            <h2 className="text-xl font-semibold mb-2">{toko.nama_toko}</h2>
-            <p className="text-gray-600 mb-2">{toko.alamat_toko}</p>
+            <h2 className="text-xl font-semibold mb-2">{toko.nama}</h2>
+            <p className="text-gray-600 mb-2">{toko.alamat}</p>
           </div>
         ))}
       </div>
@@ -98,12 +98,12 @@ const Toko = () => {
                     className="border border-gray-300 p-4 rounded-lg shadow-md"
                   >
                     <img
-                      src={barang.imageUrl_barang}
-                      alt={barang.nama_barang}
+                      src={barang.imageUrl}
+                      alt={barang.nama}
                       className="w-full h-32 object-cover rounded-lg mb-4"
                     />
-                    <h4 className="text-lg font-semibold">{barang.nama_barang}</h4>
-                    <p className="text-gray-600">Rp{barang.harga_barang}</p>
+                    <h4 className="text-lg font-semibold">{barang.nama}</h4>
+                    <p className="text-gray-600">Rp{barang.harga}</p>
                     <div className="mt-4 flex justify-between items-center">
                       <button
                         onClick={() => handleRemoveFromCart(barang)}
@@ -139,8 +139,8 @@ const Toko = () => {
           <div className="space-y-2">
             {cart.map((item) => (
               <div key={item._id} className="flex justify-between">
-                <p>{item.nama_barang}</p>
-                <p>{item.quantity} x Rp{item.harga_barang}</p>
+                <p>{item.nama}</p>
+                <p>{item.quantity} x Rp{item.harga}</p>
               </div>
             ))}
           </div>

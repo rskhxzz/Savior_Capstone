@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
+import {
+  fetchBankSampahData,
+  fetchUserData,
+  updateUserPoin,
+} from '../../script/data/api-endpoint';
 
 const BankSampah = () => {
-  const [bankSampahData, setBankSampahData] = useState([]);
+  const [bankSampah, setBankSampahData] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [weight, setWeight] = useState('');
@@ -9,125 +14,67 @@ const BankSampah = () => {
   const [result, setResult] = useState(null); // Menyimpan hasil perhitungan
   const [isProcessing, setIsProcessing] = useState(false); // Menyimpan status apakah sedang diproses
 
-  // Mengambil data Bank Sampah dari backend
   useEffect(() => {
-    const fetchBankSampahData = async () => {
+    const loadInitialData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/bank');
-        if (response.ok) {
-          const data = await response.json();
-          setBankSampahData(data);
-        } else {
-          console.error('Gagal mengambil data bank sampah');
+        // Fetch data Bank Sampah
+        const bankData = await fetchBankSampahData();
+        setBankSampahData(bankData);
+
+        // Fetch user data jika token ada
+        const token = localStorage.getItem('token');
+        if (token) {
+          const userData = await fetchUserData(token);
+          setUser(userData);
         }
       } catch (error) {
-        console.error('Error fetching bank sampah:', error);
+        console.error('Error loading initial data:', error);
       }
     };
-    fetchBankSampahData();
 
-    // Ambil token dari localStorage
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Ambil data user berdasarkan token
-      const fetchUserData = async () => {
-        try {
-          const response = await fetch('http://localhost:5000/users', {
-            headers: {
-              'Authorization': `Bearer ${token}`, // Sertakan token dalam header
-            },
-          });
-          if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
-          } else {
-            console.error('Gagal mengambil data user');
-          }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        }
-      };
-
-      fetchUserData();
-    }
-  }, []); // Hanya sekali ketika komponen pertama kali dimuat
+    loadInitialData();
+  }, []);
 
   // Fungsi untuk menghitung poin
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if (!selectedBank || !selectedType || !weight) {
       alert('Harap lengkapi semua data!');
       return;
     }
-
-    const selectedSampah = selectedBank.sampah.find(item => item._id === selectedType);
-
+  
+    const selectedSampah = selectedBank.sampah.find(item => item.id === selectedType);
+  
     if (!selectedSampah) {
       alert('Jenis sampah yang dipilih tidak ditemukan');
       return;
     }
-
-    const price = selectedSampah.harga;
+  
+    const price = selectedSampah.price;
     const total = price * parseFloat(weight);
     setResult(total.toLocaleString('id-ID'));
-
-    // Konfirmasi
+  
     const isConfirmed = window.confirm('Apakah Anda yakin ingin menghitung dan memperbarui poin?');
     if (!isConfirmed) {
-      return; // Jika dibatalkan, tidak melakukan perhitungan
+      return;
     }
-
-    // Ambil data user dari localStorage
-    const token = localStorage.getItem('token');
-    const userData = localStorage.getItem('user');
-
-    // Pastikan data user ada di localStorage
-    if (!userData) {
-      alert('Data pengguna tidak ditemukan, harap login terlebih dahulu!');
-      return; // Jika user tidak ditemukan, hentikan eksekusi
+  
+    try {
+      setIsProcessing(true); // Menandai proses sedang berlangsung
+  
+      // Update poin user melalui API
+      const updatedUser = await updateUserPoin( { poin: user.poin + total });
+  
+      // Perbarui data user di local state
+      setUser(updatedUser);
+      alert('Poin berhasil diperbarui!');
+    } catch (error) {
+      console.error('Gagal memperbarui poin:', error);
+      alert('Terjadi kesalahan saat memperbarui poin.');
+    } finally {
+      setIsProcessing(false); // Proses selesai
     }
-
-    const user = JSON.parse(userData); // Mengubah string JSON ke objek
-
-    // Ambil ID user dari data yang ada
-    const userId = user.id;
-
-    // Update poin user
-    const updatedUser = {
-      poin: user.poin + total, // Menambahkan poin sesuai dengan hasil perhitungan
-    };
-
-    // Kirimkan update poin ke server
-    const updateUserPoin = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/users/${userId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Sertakan token dalam header
-          },
-          body: JSON.stringify(updatedUser),
-        });
-        if (response.ok) {
-          const updatedUserData = await response.json();
-          setUser(updatedUserData); // Set data user yang baru
-          localStorage.setItem('user', JSON.stringify(updatedUserData)); // Simpan data user yang diperbarui
-          alert('Poin berhasil diperbarui!');
-          setSelectedBank(null);
-          setSelectedType(null);
-          setWeight('');
-          setResult(null);
-        } else {
-          console.log('Gagal memperbarui poin di server');
-        }
-      } catch (error) {
-        console.error('Error updating poin:', error);
-      }
-    };
-    
-
-    updateUserPoin();
   };
-
+  
 
   return (
     <div className="p-8 h-[100vh]">
@@ -148,15 +95,15 @@ const BankSampah = () => {
         <label className="block font-semibold mb-2">Pilih Tempat:</label>
         <select
           className="border p-2 rounded w-full"
-          value={selectedBank?._id || ''}
+          value={selectedBank?.id || ''}
           onChange={(e) =>
-            setSelectedBank(bankSampahData.find((bank) => bank._id === e.target.value))
+            setSelectedBank(bankSampah.find((bank) => bank.id === e.target.value))
           }
         >
           <option value="">-- Pilih Bank Sampah --</option>
-          {bankSampahData.map((bank) => (
-            <option key={bank._id} value={bank._id}>
-              {bank.nama_bank_sampah}
+          {bankSampah.map((bank) => (
+            <option key={bank.id} value={bank.id}>
+              {bank.name}
             </option>
           ))}
         </select>
@@ -165,11 +112,11 @@ const BankSampah = () => {
       {/* Pilih Jenis Sampah */}
       <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
         <div className="mb-4">
-          <label className="block font-semibold mb-2" htmlFor="jenis_sampah">
+          <label className="block font-semibold mb-2" htmlFor="category">
             Pilih Jenis Sampah:
           </label>
           <select
-            id="jenis_sampah"
+            id="category"
             className="border p-2 rounded w-full"
             value={selectedType || ''}
             onChange={(e) => setSelectedType(e.target.value)}
@@ -177,8 +124,8 @@ const BankSampah = () => {
           >
             <option value="">-- Pilih Jenis Sampah --</option>
             {selectedBank?.sampah?.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.jenis_sampah} - Rp {item.harga?.toLocaleString('id-ID') || 'Harga tidak tersedia'} / kg
+              <option key={item.id} value={item.id}>
+                {item.category} - Rp {item.price?.toLocaleString('id-ID') || 'Harga tidak tersedia'} / kg
               </option>
             ))}
           </select>
