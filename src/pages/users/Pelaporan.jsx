@@ -1,158 +1,145 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import Spinners from '../../components/Spinners';
+import { handleImageUpload } from '../../script/utils/ImageUtils'; // Move image upload logic to utils
 
-const Pelaporan = () => {
-  const [reports, setReports] = useState([]);
-  const [form, setForm] = useState({
-    name: 'User Dummy', // Data dummy user
-    photo: null,
-    location: '',
-    description: '',
-  });
+const PelaporanForm = () => {
+  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [address, setAddress] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
-  // Mengambil data laporan dari localStorage saat komponen dimuat
+  // Ambil nama dari localStorage
   useEffect(() => {
-    const storedReports = localStorage.getItem('reports');
-    if (storedReports) {
-      setReports(JSON.parse(storedReports));
-    } else {
-      // Data dummy jika localStorage kosong
-      setReports([
-        {
-          id: 1,
-          name: 'Budi Santoso',
-          photo: 'data:image/png;base64,iVBORw...', // Dummy Base64
-          location: 'Surabaya',
-          description: 'Tumpukan sampah di pinggir jalan.',
-        },
-        {
-          id: 2,
-          name: 'Siti Aminah',
-          photo: 'data:image/png;base64,iVBORw...', // Dummy Base64
-          location: 'Malang',
-          description: 'Pencemaran sungai di daerah pemukiman.',
-        },
-      ]);
+    const storedData = localStorage.getItem('user');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setName(parsedData.name || '');
     }
   }, []);
 
-  // Menyimpan data laporan ke localStorage setiap kali ada perubahan
-  useEffect(() => {
-    localStorage.setItem('reports', JSON.stringify(reports));
-  }, [reports]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm({ ...form, photo: reader.result }); // Simpan dalam format Base64
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  // Fungsi untuk menangani submit form
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.photo || !form.location || !form.description) {
-      alert('Harap lengkapi semua data.');
+    const imageUrl = await handleImageUpload(image, setUploading); // Call the function here
+    if (!imageUrl) return;
+
+    const storedUser = localStorage.getItem('user');
+    const userId = storedUser ? JSON.parse(storedUser).id : null;
+
+    if (!userId) {
+      alert('User ID tidak ditemukan. Pastikan Anda sudah login.');
       return;
     }
 
-    // Tambahkan laporan baru ke daftar
-    const newReport = {
-      id: reports.length + 1,
-      name: form.name,
-      photo: form.photo, // Gambar dalam format Base64
-      location: form.location,
-      description: form.description,
-    };
+    const reportData = {
+      userId,
+      judul: title,
+      address,
+      description,
+      imageUrl,
+    };  
 
-    setReports([...reports, newReport]);
-    alert('Laporan berhasil dikirim.');
-    setForm({ name: 'User Dummy', photo: null, location: '', description: '' }); // Reset form
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/pelaporan`,
+        reportData
+      );
+
+      // Menggunakan SweetAlert untuk notifikasi sukses
+      Swal.fire({
+        title: 'Laporan berhasil dikirim!',
+        text: 'Laporan berhasil dikirim!',
+        icon: 'success',
+        timer: 2000,
+      });
+
+      // Reset form setelah sukses
+      setTitle('');
+      setAddress('');
+      setDescription('');
+      setImage(null);
+    } catch (error) {
+      console.error('Gagal mengirim laporan:', error);
+      Swal.fire({
+        title: 'Terjadi kesalahan!',
+        text: 'Laporan gagal dikirim. Silakan coba lagi.',
+        icon: 'error',
+        timer: 2000,
+      });
+    }
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Pelaporan</h1>
+    <div className="max-w-lg mx-auto px-8 py-8 my-12 bg-white rounded-lg shadow-md relative">
+      {/* Tampilkan spinner saat proses upload berlangsung */}
+      {uploading && <Spinners />}
 
-      {/* Form Pelaporan */}
-      <form onSubmit={handleSubmit} className="mb-8 space-y-4">
+      {/* Konten form */}
+      <h1 className="text-2xl font-bold mb-4">Form Laporan</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-semibold mb-2">Nama Pengguna:</label>
+          <label className="block text-sm font-medium">Nama:</label>
           <input
             type="text"
-            name="name"
-            value={form.name}
+            value={name}
+            readOnly
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
             disabled
-            className="border rounded p-2 w-full"
           />
         </div>
         <div>
-          <label className="block font-semibold mb-2">Foto Hal yang Dilaporkan:</label>
+          <label className="block text-sm font-medium">Judul:</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Alamat:</label>
+          <input
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Deskripsi:</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Unggah Gambar:</label>
           <input
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
-            className="block w-full text-sm text-gray-600"
-          />
-        </div>
-        <div>
-          <label className="block font-semibold mb-2">Lokasi:</label>
-          <input
-            type="text"
-            name="location"
-            value={form.location}
-            onChange={handleInputChange}
-            placeholder="Masukkan lokasi"
-            className="border rounded p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block font-semibold mb-2">Deskripsi:</label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleInputChange}
-            placeholder="Masukkan deskripsi"
-            className="border rounded p-2 w-full"
-            rows="3"
+            onChange={(e) => setImage(e.target.files[0])}
+            className="w-full mt-1"
+            required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+          disabled={uploading}
         >
-          Kirim Laporan
+          {uploading ? 'Mengunggah...' : 'Kirim Laporan'}
         </button>
       </form>
-
-      {/* Daftar Laporan */}
-      <h2 className="text-2xl font-bold mb-4">Daftar Laporan</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {reports.map((report) => (
-          <div
-            key={report.id}
-            className="border rounded-lg p-4 shadow-md flex flex-col items-center"
-          >
-            <img
-              src={report.photo}
-              alt={report.description}
-              className="w-40 h-40 object-cover mb-4"
-            />
-            <h3 className="text-lg font-semibold">{report.name}</h3>
-            <p className="text-sm text-gray-600">{report.location}</p>
-            <p className="text-sm text-gray-800 mt-2">{report.description}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
 
-export default Pelaporan;
+export default PelaporanForm;

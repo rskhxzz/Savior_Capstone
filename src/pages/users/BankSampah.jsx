@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  fetchBankSampahData,
-  fetchUserData,
-  updateUserPoin,
-} from '../../script/data/api-endpoint';
+import { fetchBankSampahData } from '../../script/data/api-endpoint';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const BankSampah = () => {
   const [bankSampah, setBankSampahData] = useState([]);
@@ -15,66 +12,54 @@ const BankSampah = () => {
   const [isProcessing, setIsProcessing] = useState(false); // Menyimpan status apakah sedang diproses
 
   useEffect(() => {
-    const loadInitialData = async () => {
+    // Mengambil data bank sampah dan data user (misalnya dari localStorage atau API)
+    const fetchData = async () => {
       try {
-        // Fetch data Bank Sampah
-        const bankData = await fetchBankSampahData();
-        setBankSampahData(bankData);
+        // Ambil data bank sampah
+        const bankSampahResponse = await fetchBankSampahData();
+        setBankSampahData(bankSampahResponse);
 
-        // Fetch user data jika token ada
-        const token = localStorage.getItem('token');
-        if (token) {
-          const userData = await fetchUserData(token);
-          setUser(userData);
+        // Ambil data user (misalnya dari localStorage)
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          setUser(userData); // Menyimpan data user di state
         }
       } catch (error) {
-        console.error('Error loading initial data:', error);
+        console.error('Gagal mengambil data:', error);
+        Swal.fire('Error', 'Terjadi kesalahan saat memuat data.', 'error');
       }
     };
 
-    loadInitialData();
+    fetchData();
   }, []);
 
   // Fungsi untuk menghitung poin
   const handleCalculate = async () => {
     if (!selectedBank || !selectedType || !weight) {
-      alert('Harap lengkapi semua data!');
+      Swal.fire('Peringatan', 'Harap lengkapi semua data!', 'warning');
       return;
     }
-  
+
     const selectedSampah = selectedBank.sampah.find(item => item.id === selectedType);
-  
+
     if (!selectedSampah) {
-      alert('Jenis sampah yang dipilih tidak ditemukan');
+      Swal.fire('Peringatan', 'Jenis sampah yang dipilih tidak ditemukan', 'warning');
       return;
     }
-  
+
     const price = selectedSampah.price;
     const total = price * parseFloat(weight);
     setResult(total.toLocaleString('id-ID'));
-  
-    const isConfirmed = window.confirm('Apakah Anda yakin ingin menghitung dan memperbarui poin?');
-    if (!isConfirmed) {
-      return;
-    }
-  
-    try {
-      setIsProcessing(true); // Menandai proses sedang berlangsung
-  
-      // Update poin user melalui API
-      const updatedUser = await updateUserPoin( { poin: user.poin + total });
-  
-      // Perbarui data user di local state
-      setUser(updatedUser);
-      alert('Poin berhasil diperbarui!');
-    } catch (error) {
-      console.error('Gagal memperbarui poin:', error);
-      alert('Terjadi kesalahan saat memperbarui poin.');
-    } finally {
-      setIsProcessing(false); // Proses selesai
-    }
+
+    // Menampilkan hasil perhitungan dengan SweetAlert
+    Swal.fire({
+      title: 'Hasil Perhitungan',
+      text: `Poin yang dihitung adalah: Rp ${total.toLocaleString('id-ID')}`,
+      icon: 'success',
+      timer: 2000, // 2 detik
+    });
   };
-  
 
   return (
     <div className="p-8 h-[100vh]">
@@ -165,12 +150,11 @@ const BankSampah = () => {
       {result && !isProcessing && (
         <div className="mt-6 p-4 bg-blue-100 rounded shadow">
           <p className="text-blue-800 font-semibold">
-            Poin yang didapatkan adalah: {result}
+            Poin yang dihitung: {result}
           </p>
         </div>
       )}
     </div>
-
   );
 };
 
