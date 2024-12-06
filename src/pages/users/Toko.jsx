@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Spinners from '../../components/Spinners';
 import { getTokoData } from '../../script/data/api-endpoint';
 
 const Toko = () => {
@@ -60,7 +61,9 @@ const Toko = () => {
   };
 
   if (loading) {
-    return <p className="text-center">Loading...</p>;
+    return <div className="flex justify-center items-center h-screen">
+      <Spinners />
+    </div>;
   }
 
   return (

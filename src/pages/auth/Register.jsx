@@ -31,14 +31,14 @@ const Register = () => {
         age: parseInt(formData.age) || null, // Konversi age ke integer
       });
 
-      toast.success('Registration successful!');
+      toast.success('Berhasil mendaftar!');
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
-      console.error('Error during registration:', error);
+      console.error('Kesalahan ketika mendaftar', error);
       if (error.response?.data?.error) {
         setError(error.response.data.error);
       } else {
-        setError('An error occurred. Please try again later.');
+        setError('Terjadi kesalahan, silahkan coba lagi');
       }
     }
   };
