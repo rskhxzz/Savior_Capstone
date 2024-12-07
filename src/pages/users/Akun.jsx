@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAkunHandler } from '../../script/utils/AkunHandler';
 import backgroundImg from '../../assets/images/background/akun3.jpg';
 
@@ -24,7 +23,7 @@ const Akun = () => {
     );
   }
 
-  const allowedKeys = ['name', 'email', 'gender', 'address'];
+  const allowedKeys = ['name', 'email', 'age', 'phoneNumber' , 'gender', 'address'];
 
   return (
     <div

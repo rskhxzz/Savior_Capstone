@@ -32,7 +32,7 @@ const Login = () => {
                 toast.success(`Selamat datang ${user.name}!`);
 
                 setTimeout(() => {
-                    navigate('/akun');
+                    navigate('/');
                 }, 2000);
             }
         } catch (error) {

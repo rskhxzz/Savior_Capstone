@@ -5,65 +5,76 @@ import { getTokoData } from '../../script/data/api-endpoint';
 const Toko = () => {
   const [dataToko, setDataToko] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]); // Menyimpan barang yang dipilih di keranjang
-  const [totalPrice, setTotalPrice] = useState(0); // Total harga
+  const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem('cart')) || []); // Load keranjang dari sessionStorage
+  const [totalPrice, setTotalPrice] = useState(Number(sessionStorage.getItem('totalPrice')) || 0);
 
+  // Fetch data toko dengan caching menggunakan sessionStorage
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await getTokoData();
-        setDataToko(result); // Mengatur data toko ke state
+        const cachedData = sessionStorage.getItem('dataToko');
+        if (cachedData) {
+          setDataToko(JSON.parse(cachedData));
+          setLoading(false);
+        } else {
+          const result = await getTokoData();
+          setDataToko(result);
+          sessionStorage.setItem('dataToko', JSON.stringify(result)); // Simpan ke sessionStorage
+          setLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching data toko:', error);
-      } finally {
-        setLoading(false); // Mengatur loading menjadi false setelah data diambil
+        setLoading(false);
       }
     };
 
-    fetchData(); // Memanggil fungsi untuk mendapatkan data toko
+    fetchData();
   }, []);
 
   const handleAddToCart = (barang) => {
     const existingItem = cart.find((item) => item._id === barang._id);
+    let updatedCart;
     if (existingItem) {
-      // Jika barang sudah ada di keranjang, tambah jumlahnya
-      setCart(
-        cart.map((item) =>
-          item._id === barang._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
+      updatedCart = cart.map((item) =>
+        item._id === barang._id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       );
     } else {
-      // Jika barang belum ada di keranjang, tambahkan ke keranjang
-      setCart([...cart, { ...barang, quantity: 1 }]);
+      updatedCart = [...cart, { ...barang, quantity: 1 }];
     }
-    setTotalPrice((prev) => prev + barang.harga); // Update total harga
+    setCart(updatedCart);
+    setTotalPrice((prev) => prev + barang.harga);
+    sessionStorage.setItem('cart', JSON.stringify(updatedCart)); // Simpan keranjang ke sessionStorage
+    sessionStorage.setItem('totalPrice', String(totalPrice + barang.harga));
   };
 
   const handleRemoveFromCart = (barang) => {
     const existingItem = cart.find((item) => item._id === barang._id);
+    let updatedCart;
     if (existingItem && existingItem.quantity > 1) {
-      // Jika jumlah barang lebih dari 1, kurangi jumlahnya
-      setCart(
-        cart.map((item) =>
-          item._id === barang._id
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
+      updatedCart = cart.map((item) =>
+        item._id === barang._id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
       );
-      setTotalPrice((prev) => prev - barang.harga); // Update total harga
+      setCart(updatedCart);
+      setTotalPrice((prev) => prev - barang.harga);
     } else {
-      // Jika jumlah barang 1, hapus barang dari keranjang
-      setCart(cart.filter((item) => item._id !== barang._id));
-      setTotalPrice((prev) => prev - barang.harga); // Update total harga
+      updatedCart = cart.filter((item) => item._id !== barang._id);
+      setCart(updatedCart);
+      setTotalPrice((prev) => prev - barang.harga);
     }
+    sessionStorage.setItem('cart', JSON.stringify(updatedCart)); // Simpan keranjang ke sessionStorage
+    sessionStorage.setItem('totalPrice', String(totalPrice - barang.harga));
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">
-      <Spinners />
-    </div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinners />
+      </div>
+    );
   }
 
   return (
@@ -115,7 +126,6 @@ const Toko = () => {
                         -
                       </button>
 
-                      {/* Menampilkan jumlah barang yang dipilih */}
                       <span className="px-4">{cart.find((item) => item._id === barang._id)?.quantity || 0}</span>
 
                       <button
@@ -134,28 +144,6 @@ const Toko = () => {
           </div>
         ))}
       </div>
-
-      {/* Checkout */}
-      {cart.length > 0 && (
-        <div className="mt-8 p-4 border border-gray-300 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold mb-4">Struk Belanja</h2>
-          <div className="space-y-2">
-            {cart.map((item) => (
-              <div key={item._id} className="flex justify-between">
-                <p>{item.nama}</p>
-                <p>{item.quantity} x Rp{item.harga}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 flex justify-between font-semibold">
-            <p>Total:</p>
-            <p>Rp{totalPrice}</p>
-          </div>
-          <button className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-lg w-full">
-            Checkout
-          </button>
-        </div>
-      )}
     </div>
   );
 };

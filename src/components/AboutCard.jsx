@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import Images1 from "../assets/images/grid-images/1.png";
 
 const aboutCards = [
@@ -32,16 +35,22 @@ const aboutCards = [
 ];
 
 function AboutCard() {
+  useEffect(() => {
+    AOS.init({
+      duration: 500, // Durasi animasi dalam milidetik
+      once: false,     // Animasi hanya berjalan sekali
+    });
+  }, []);
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center" >
       <div className="grid grid-cols-1 gap-16 mt-8 max-w-[70vw]">
         {aboutCards.map((card, index) => (
           <div
             key={index}
             // Gunakan flex-row-reverse untuk index ke-2 dan ke-4
-            className={`flex gap-6 ${
-              index % 2 !== 0 ? "flex-row-reverse " : "flex-row "
-            }`}
+            className={`flex gap-6 ${index % 2 !== 0 ? "flex-row-reverse " : "flex-row "
+              }`}
+              data-aos={index % 2 === 0 ? 'fade-down-right' : 'fade-down-left'}
           >
             {/* Gambar */}
             <img
@@ -50,7 +59,7 @@ function AboutCard() {
               className="rounded-lg w-96 h-96 object-cover"
             />
             {/* Konten Teks */}
-            <div>
+            <div >
               <h1 className="text-4xl font-bold">{card.Name}</h1>
               <h3 className="text-2xl font-bold text-gray-700 my-4">{card.Position}</h3>
               <p className="text-gray-600 text-lg   ">{card.Description}</p>
