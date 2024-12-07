@@ -7,38 +7,58 @@ import Spinners from '../../components/Spinners';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // State untuk kontrol spinner
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); // Mulai loading
+
+        setLoading(true); // Aktifkan spinner sebelum melakukan request
 
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { email, password });
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
+                email,
+                password,
+            });
+
             const { message, token, user } = response.data;
+
             console.log('Login response:', response.data);
 
             if (message === 'Login successful.') {
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('user', JSON.stringify(user));
+
                 toast.success(`Selamat datang ${user.name}!`);
 
                 setTimeout(() => {
-                    navigate('/');
+                    navigate('/akun');
                 }, 2000);
             }
         } catch (error) {
             console.error('Error logging in:', error);
-            toast.error('Login gagal. Silakan coba lagi.');
+
+            if (error.response && error.response.data) {
+                const { error: errorMessage } = error.response.data;
+
+                if (errorMessage === 'User not found.') {
+                    toast.error('Email tidak ditemukan. Silakan periksa kembali.');
+                } else if (errorMessage === 'Invalid credentials.') {
+                    toast.error('Password Anda salah. Silakan coba lagi.');
+                } else {
+                    toast.error('Login gagal. Silakan coba lagi.');
+                }
+            } else {
+                toast.error('Login gagal. Silakan coba lagi.');
+            }
         } finally {
-            setLoading(false); // Menghentikan loading
+            setLoading(false); // Nonaktifkan spinner setelah selesai
         }
     };
 
     return (
         <div className="relative flex flex-col h-screen w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto my-20 px-20 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl shadow-xl">
-            {loading && <Spinners />}
+            {loading && <Spinners />} {/* Aktifkan spinner jika loading true */}
             <div className="flex flex-col justify-center mx-auto items-center gap-3 pb-4">
                 <div>
                     <img src="src/assets/savior-icon.png" alt="Logo" width="100" />
