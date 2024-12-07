@@ -10,7 +10,7 @@ const Navbars = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md z-50">
+    <nav className="bg-[#355F2E] shadow-md z-50 ">
       <div className="container mx-auto px-4 py-3 min-h-16 flex justify-between items-center">
         <div className="text-xl font-bold">
           <Link to="/">SAVIOR</Link>
@@ -44,7 +44,7 @@ const Navbars = () => {
           </svg>
         </button>
         <ul
-          className={`md:flex space-x-6 text-gray-700 font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50  ${
+          className={`md:flex space-x-6 text-[#F4E0AF] font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50  ${
             isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'
           }`}
         >
