@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { fetchBankSampahData } from '../../script/data/api-endpoint';
 import Swal from 'sweetalert2'; // Import SweetAlert2
+import API_URL from '../../script/data/config';
+import axios from 'axios';
 
 const BankSampah = () => {
   const [bankSampah, setBankSampahData] = useState([]);
@@ -10,6 +12,8 @@ const BankSampah = () => {
   const [user, setUser] = useState(null); // Untuk menyimpan data user yang login
   const [result, setResult] = useState(null); // Menyimpan hasil perhitungan
   const [isProcessing, setIsProcessing] = useState(false); // Menyimpan status apakah sedang diproses
+  const [canProcess, setCanProcess] = useState(false); // Tombol "Proses"
+
 
   useEffect(() => {
     // Mengambil data bank sampah dan data user (misalnya dari localStorage atau API)
@@ -52,14 +56,56 @@ const BankSampah = () => {
     const total = price * parseFloat(weight);
     setResult(total.toLocaleString('id-ID'));
 
-    // Menampilkan hasil perhitungan dengan SweetAlert
+    // Aktifkan tombol "Proses"
+    setCanProcess(true);
+
     Swal.fire({
       title: 'Hasil Perhitungan',
       text: `Poin yang dihitung adalah: Rp ${total.toLocaleString('id-ID')}`,
       icon: 'success',
-      timer: 2000, // 2 detik
+      timer: 2000,
     });
   };
+
+  const handleProcess = async () => {
+    if (!canProcess) return;
+
+    const payload = {
+      userId: parseInt(user?.id),
+      sampahId: selectedType,
+      bankSampahId: selectedBank?.id,
+      amount: parseFloat(weight),
+      earned: parseFloat(result.replace(/[^0-9]/g, '')),
+      status: 'pending',
+    };
+
+    console.log(payload); // Periksa payload sebelum dikirim
+    try {
+      setIsProcessing(true);
+      await axios.post(`${API_URL}/penukaran`, payload);
+    } catch (error) {
+      console.error('Payload yang dikirim:', payload);
+      console.error('Gagal memproses data:', error);
+    }
+
+    try {
+      setIsProcessing(true); // Set status sedang diproses
+      const response = await axios.post(`${API_URL}/penukaran`, payload); // Kirim data ke backend
+
+      Swal.fire('Sukses', 'Data berhasil diproses!', 'success');
+      console.log('Response:', response.data); // Log respons dari backend
+      setCanProcess(false); // Nonaktifkan tombol "Proses"
+      setResult(null); // Reset hasil perhitungan
+      setWeight(''); // Reset input berat
+    } catch (error) {
+      console.error('Gagal memproses data:', error);
+      Swal.fire('Error', 'Terjadi kesalahan saat memproses data.', 'error');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+
 
   return (
     <div className="p-8 h-[100vh]">
@@ -69,7 +115,7 @@ const BankSampah = () => {
       {user && (
         <div className="text-xl mb-6">
           <p><strong>Nama:</strong> {user.name}</p>
-          <p><strong>Poin:</strong> {user.poin}</p>
+          <p><strong>Poin:</strong> {user.point}</p>
         </div>
       )}
 
@@ -154,6 +200,19 @@ const BankSampah = () => {
           </p>
         </div>
       )}
+      {/* Tombol Proses */}
+      {canProcess && (
+        <button
+          type="button"
+          onClick={handleProcess}
+          disabled={isProcessing} // Nonaktifkan saat sedang diproses
+          className={`bg-blue-500 text-white px-4 py-2 rounded shadow-md ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+            }`}
+        >
+          {isProcessing ? 'Memproses...' : 'Proses'}
+        </button>
+      )}
+
     </div>
   );
 };
