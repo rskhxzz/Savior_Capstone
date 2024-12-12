@@ -30,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
 
 // Home component
 const Home = () => (
-  <div className='flex flex-col'>
+  <div className='flex flex-col max-w-[100vw]'>
     <Hero />
     <Features />
     <Steps />
