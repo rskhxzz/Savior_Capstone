@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from 'react';
 import Spinners from '../../components/Spinners';
 import { getTokoData } from '../../script/data/api-endpoint';
 import API_URL from '../../script/data/config';
