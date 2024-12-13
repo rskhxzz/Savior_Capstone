@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -9,6 +9,37 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false); // State untuk kontrol spinner
     const navigate = useNavigate();
+    const [user, setUser] = useState(null); // Menyimpan data user setelah login
+
+    const fetchUserData = async (userId) => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/users/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                },
+            });
+            console.log("Fetched user data:", response.data);
+            return response.data; // Mengembalikan semua data pengguna
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    useEffect(() => {
+        // Jika user ada, mulai interval untuk memperbarui data pengguna
+        if (user) {
+            const intervalId = setInterval(async () => {
+                const updatedData = await fetchUserData(user.id);
+                if (updatedData && JSON.stringify(updatedData) !== JSON.stringify(user)) {
+                    localStorage.setItem('user', JSON.stringify(updatedData));
+                    setUser(updatedData); // Memperbarui state user
+                }
+            }, 5000); // Memperbarui data setiap 1 detik
+
+            // Membersihkan interval saat komponen di-unmount
+            return () => clearInterval(intervalId);
+        }
+    }, [user]); // Hanya akan dipanggil ketika user berubah
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,6 +59,7 @@ const Login = () => {
             if (message === 'Login successful.') {
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                setUser(user); // Menyimpan data user di state
 
                 toast.success(`Selamat datang ${user.name}!`);
 

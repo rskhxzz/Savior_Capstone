@@ -16,18 +16,27 @@ const BankSampah = () => {
 
 
   useEffect(() => {
-    // Mengambil data bank sampah dan data user (misalnya dari localStorage atau API)
     const fetchData = async () => {
       try {
         // Ambil data bank sampah
         const bankSampahResponse = await fetchBankSampahData();
         setBankSampahData(bankSampahResponse);
 
-        // Ambil data user (misalnya dari localStorage)
+        // Ambil data user dari API
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const userData = JSON.parse(storedUser);
-          setUser(userData); // Menyimpan data user di state
+          const userId = userData.id; // Mendapatkan userId dari data user yang ada di localStorage
+
+          // Memanggil API untuk mengambil data user berdasarkan userId
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`);
+          if (response.ok) {
+            const userFromApi = await response.json();
+            setUser(userFromApi); // Menyimpan data user di state
+            
+          } else {
+            throw new Error('Failed to fetch user data');
+          }
         }
       } catch (error) {
         console.error('Gagal mengambil data:', error);
