@@ -175,8 +175,8 @@ const Toko = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-[80vw]">
-      <h1 className="text-3xl font-bold text-center mb-6">Daftar Toko</h1>
+    <div className="container mx-auto max-w-[80vw] min-h-screen">
+      <h1 className="text-3xl font-bold text-center my-8">Daftar Toko</h1>
       <div className="mb-4 text-center">
         <p className="text-lg">Poin Anda: {userPoints}</p>
       </div>

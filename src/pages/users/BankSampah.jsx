@@ -33,7 +33,7 @@ const BankSampah = () => {
           if (response.ok) {
             const userFromApi = await response.json();
             setUser(userFromApi); // Menyimpan data user di state
-            
+            localStorage.setItem('user', JSON.stringify(userFromApi));
           } else {
             throw new Error('Failed to fetch user data');
           }
@@ -117,8 +117,8 @@ const BankSampah = () => {
 
 
   return (
-    <div className="p-8 h-[100vh]">
-      <h1 className="text-3xl font-bold mb-4">Bank Sampah</h1>
+    <div className="mx-auto max-w-[80vw] min-h-screen ">
+      <h1 className="text-3xl font-bold my-8 text-center">Bank Sampah</h1>
 
       {/* Menampilkan Nama dan Poin di bawah H1 */}
       {user && (
