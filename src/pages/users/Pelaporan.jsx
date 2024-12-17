@@ -13,7 +13,6 @@ const PelaporanForm = () => {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // Ambil nama dari localStorage
   useEffect(() => {
     const storedData = localStorage.getItem('user');
     if (storedData) {
@@ -22,7 +21,6 @@ const PelaporanForm = () => {
     }
   }, []);
 
-  // Fungsi untuk menangani submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     const imageUrl = await handleImageUpload(image, setUploading); // Call the function here
