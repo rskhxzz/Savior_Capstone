@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import Spinners from '../../components/Spinners';
 import { getTokoData } from '../../script/data/api-endpoint';
 import API_URL from '../../script/data/config';
-import Swal from 'sweetalert2';  // Pastikan SweetAlert2 diimport
+import Swal from 'sweetalert2';
+import { Slide2 } from '../../components/Slides';
 
 const Toko = () => {
   const [dataToko, setDataToko] = useState([]);
@@ -13,6 +14,7 @@ const Toko = () => {
   const [userPoints, setUserPoints] = useState(0);
   const [receipt, setReceipt] = useState(null);
   const [selectedToko, setSelectedToko] = useState(null);
+  const [showSlide2, setShowSlide2] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,7 +92,6 @@ const Toko = () => {
     const pointsUsed = barang.harga;
     const updatedPoints = userPoints - pointsUsed;
 
-    // Konfirmasi SweetAlert2 sebelum melanjutkan pembelian
     const result = await Swal.fire({
       title: 'Konfirmasi Pembelian',
       text: `Apakah Anda yakin ingin membeli ${barang.nama} dari ${toko.nama} seharga Rp${barang.harga}?`,
@@ -98,7 +99,7 @@ const Toko = () => {
       showCancelButton: true,
       confirmButtonText: 'Ya, beli!',
       cancelButtonText: 'Batal',
-      confirmButtonColor: '#28a745',  
+      confirmButtonColor: '#28a745',
       cancelButtonColor: '#dc3545',
     });
 
@@ -135,19 +136,20 @@ const Toko = () => {
 
         Swal.fire({
           title: 'Pembelian Berhasil',
-          text: `Pembelian ${barang.nama} berhasil! Poin Anda sekarang: ${updatedPoints}`,
+          text: `Pembelian ${barang.nama} berhasil! Silakan datang ke toko`,
           icon: 'success',
+          confirmButtonColor: '#28a745',
         });
 
         setDataToko((prevData) =>
           prevData.map((t) =>
             t.id === toko.id
               ? {
-                  ...t,
-                  barang: t.barang.map((b) =>
-                    b.id === barang.id ? { ...b, stok: b.stok - 1 } : b
-                  ),
-                }
+                ...t,
+                barang: t.barang.map((b) =>
+                  b.id === barang.id ? { ...b, stok: b.stok - 1 } : b
+                ),
+              }
               : t
           )
         );
@@ -174,9 +176,22 @@ const Toko = () => {
     );
   }
 
+  // handle clode modal
+  const handleCloseModal = (e) => {
+    if (e.target.id === "modal-background") {
+      setShowSlide2(false);
+    }
+  };
+
   return (
     <div className="container mx-auto max-w-[80vw] min-h-screen">
-      <h1 className="text-3xl font-bold text-center my-8">Daftar Toko</h1>
+      <h1 className="text-3xl font-bold text-center my-8">Toko</h1>
+      <button
+        onClick={() => setShowSlide2(true)}
+        className="bg-blue-500 text-white px-4 py-2 items-center rounded shadow-md hover:bg-blue-600"
+      >
+        Petunjuk
+      </button>
       <div className="mb-4 text-center">
         <p className="text-lg">Poin Anda: {userPoints}</p>
       </div>
@@ -249,6 +264,24 @@ const Toko = () => {
               )}
             </div>
           ))}
+        </div>
+      )}
+      {/* Modal untuk Slide 2 */}
+      {showSlide2 && (
+        <div
+          id="modal-background"
+          onClick={handleCloseModal} // Menangani klik di luar modal
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
+        >
+          <div className=" rounded-lg p-8 max-w-[95vw] max-h-[80vh] overflow-auto">
+            <button
+              onClick={() => setShowSlide2(false)}
+              className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full shadow-md"
+            >
+              ✕
+            </button>
+            <Slide2 />
+          </div>
         </div>
       )}
     </div>

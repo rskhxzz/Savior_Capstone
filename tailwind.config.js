@@ -14,6 +14,9 @@ export default {
       textShadow: {
         default: '2px 2px 4px rgba(0, 0, 0, 0.5)',
       },
+      fontFamily: {
+        sans: ['Roboto', 'Arial', 'sans-serif'],
+      },
     },
   },
   plugins: [
