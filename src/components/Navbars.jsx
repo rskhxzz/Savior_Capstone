@@ -51,6 +51,11 @@ const Navbars = () => {
         <ul
           className={`md:flex space-x-6 text-[#e9e9e9] font-semibold absolute md:static top-16 left-0 right-0 bg-[#355F2E] md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50 ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'}`}
         >
+          <li>
+            <Link to="/" onClick={() => setIsOpen(false)}>
+              Beranda
+            </Link>
+          </li>
           <li className="relative">
             <button
               className="text-[#e9e9e9] font-semibold"
@@ -59,9 +64,8 @@ const Navbars = () => {
               Fitur
             </button>
             <ul
-              className={`${
-                isDropdownOpen ? 'block' : 'hidden'
-              } absolute bg-[#355F2E] shadow-md space-y-4 p-4 mt-2 rounded-md w-48 left-0 top-full z-10`}
+              className={`${isDropdownOpen ? 'block' : 'hidden'
+                } absolute bg-[#355F2E] shadow-md space-y-4 p-4 mt-2 rounded-md w-48 left-0 top-full z-10`}
             >
               <li>
                 <Link to="/bank-sampah" onClick={() => setIsOpen(false)}>
