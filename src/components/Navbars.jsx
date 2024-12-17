@@ -3,15 +3,10 @@ import { useState } from 'react';
 
 const Navbars = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     console.log('Toggle menu:', !isOpen);
     setIsOpen(!isOpen);
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -49,45 +44,28 @@ const Navbars = () => {
           </svg>
         </button>
         <ul
-          className={`md:flex space-x-6 text-[#e9e9e9] font-semibold absolute md:static top-16 left-0 right-0 bg-[#355F2E] md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50 ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'}`}
+          className={`md:flex space-x-6 text-[#F4E0AF] font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50  ${
+            isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'
+          }`}
         >
-          <li className="relative">
-            <button
-              className="text-[#e9e9e9] font-semibold"
-              onClick={toggleDropdown}
-            >
-              Fitur
-            </button>
-            <ul
-              className={`${
-                isDropdownOpen ? 'block' : 'hidden'
-              } absolute bg-[#355F2E] shadow-md space-y-4 p-4 mt-2 rounded-md w-48 left-0 top-full z-10`}
-            >
-              <li>
-                <Link to="/bank-sampah" onClick={() => setIsOpen(false)}>
-                  Bank Sampah
-                </Link>
-              </li>
-              <li>
-                <Link to="/toko" onClick={() => setIsOpen(false)}>
-                  Toko
-                </Link>
-              </li>
-              <li>
-                <Link to="/pelaporan" onClick={() => setIsOpen(false)}>
-                  Pelaporan
-                </Link>
-              </li>
-            </ul>
+          <li>
+            <Link to="/bank-sampah" onClick={() => setIsOpen(false)}>
+              Bank Sampah
+            </Link>
+          </li>
+          <li>
+            <Link to="/toko" onClick={() => setIsOpen(false)}>
+              Toko
+            </Link>
+          </li>
+          <li>
+            <Link to="/pelaporan" onClick={() => setIsOpen(false)}>
+              Pelaporan
+            </Link>
           </li>
           <li>
             <Link to="/about" onClick={() => setIsOpen(false)}>
               About
-            </Link>
-          </li>
-          <li>
-            <Link to="/history" onClick={() => setIsOpen(false)}>
-              Riwayat
             </Link>
           </li>
           <li>
