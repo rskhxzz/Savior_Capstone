@@ -62,6 +62,10 @@ const History = () => {
         success: 'Berhasil',
         cancelled: 'Dibatalkan',
         pending: 'Menunggu',
+        sent: 'Terkirim',
+        reviewed: 'Diproses',
+        completed: 'Selesai',
+        rejected: 'Ditolak',
     };
 
     const renderContent = () => {
@@ -101,6 +105,7 @@ const History = () => {
                                     className="p-4 border rounded-lg shadow-sm bg-gray-50 hover:bg-gray-100"
                                 >
                                     <p><span className="font-bold">Nama:</span> {payment.user.name}</p>
+                                    <p><span className="font-bold">Toko:</span> {payment.toko.nama}</p>
                                     <p><span className="font-bold">Status:</span> {statusMapping[payment.status]}</p>
                                     <p><span className="font-bold">Produk:</span> {payment.barang.nama}</p>
                                     <p><span className="font-bold">Total:</span> {payment.totalPrice}</p>
@@ -120,10 +125,18 @@ const History = () => {
                                 <li
                                     key={pelaporan.id}
                                     className="p-4 border rounded-lg shadow-sm bg-gray-50 hover:bg-gray-100"
-                                >
+                                >                        <img
+                                src={pelaporan.imageUrl}
+                                alt={pelaporan.judul}
+                                className="max-w-3xl h-32 object-cover my-2 rounded-lg"
+                            />
                                     <p><span className="font-bold">Nama:</span> {pelaporan.name?.name}</p>
-                                    <p><span className="font-bold">Status:</span> {pelaporan.status}</p>
-                                    <p><span className="font-bold">Date Created:</span> {pelaporan.dateCreated}</p>
+                                    <p><span className="font-bold">Judul:</span> {pelaporan.judul}</p>
+                                    <p><span className="font-bold">Lokasi:</span> {pelaporan.address}</p>
+                                    <p><span className="font-bold">Deskripsi:</span> {pelaporan.description}</p>
+                                    <p><span className="font-bold">Status:</span> {statusMapping[pelaporan.status]}</p>
+                                    <p><span className="font-bold">Dibuat:</span> {format(new Date(pelaporan.dateCreated), 'yyyy-MM-dd HH:mm')}</p>
+                                    <p><span className="font-bold">Diubah:</span> {format(new Date(pelaporan.dateUpdated), 'yyyy-MM-dd HH:mm')}</p>
                                 </li>
                             ))}
                         </ul>
@@ -137,7 +150,7 @@ const History = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold text-center mb-6">History</h1>
+            <h1 className="text-2xl font-bold text-center mb-6">Riwayat Kamu</h1>
             <div className="flex justify-center space-x-4 mb-6">
                 <button
                     className={`px-4 py-2 rounded-lg ${activeTab === 'penukaran' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
