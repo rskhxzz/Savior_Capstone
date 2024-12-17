@@ -88,24 +88,18 @@ const BankSampah = () => {
       status: 'pending',
     };
 
-    console.log(payload); // Periksa payload sebelum dikirim
+    console.log(payload); 
+
+
     try {
       setIsProcessing(true);
-      await axios.post(`${API_URL}/penukaran`, payload);
-    } catch (error) {
-      console.error('Payload yang dikirim:', payload);
-      console.error('Gagal memproses data:', error);
-    }
-
-    try {
-      setIsProcessing(true); // Set status sedang diproses
-      const response = await axios.post(`${API_URL}/penukaran`, payload); // Kirim data ke backend
+      const response = await axios.post(`${API_URL}/penukaran`, payload);
 
       Swal.fire('Sukses', 'Data berhasil diproses!', 'success');
-      console.log('Response:', response.data); // Log respons dari backend
-      setCanProcess(false); // Nonaktifkan tombol "Proses"
-      setResult(null); // Reset hasil perhitungan
-      setWeight(''); // Reset input berat
+      console.log('Response:', response.data); 
+      setCanProcess(false);
+      setResult(null); 
+      setWeight('');
     } catch (error) {
       console.error('Gagal memproses data:', error);
       Swal.fire('Error', 'Terjadi kesalahan saat memproses data.', 'error');
@@ -214,7 +208,7 @@ const BankSampah = () => {
         <button
           type="button"
           onClick={handleProcess}
-          disabled={isProcessing} // Nonaktifkan saat sedang diproses
+          disabled={isProcessing}
           className={`bg-blue-500 text-white px-4 py-2 rounded shadow-md ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
             }`}
         >
