@@ -16,18 +16,27 @@ const BankSampah = () => {
 
 
   useEffect(() => {
-    // Mengambil data bank sampah dan data user (misalnya dari localStorage atau API)
     const fetchData = async () => {
       try {
         // Ambil data bank sampah
         const bankSampahResponse = await fetchBankSampahData();
         setBankSampahData(bankSampahResponse);
 
-        // Ambil data user (misalnya dari localStorage)
+        // Ambil data user dari API
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
           const userData = JSON.parse(storedUser);
-          setUser(userData); // Menyimpan data user di state
+          const userId = userData.id; // Mendapatkan userId dari data user yang ada di localStorage
+
+          // Memanggil API untuk mengambil data user berdasarkan userId
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`);
+          if (response.ok) {
+            const userFromApi = await response.json();
+            setUser(userFromApi); // Menyimpan data user di state
+            localStorage.setItem('user', JSON.stringify(userFromApi));
+          } else {
+            throw new Error('Failed to fetch user data');
+          }
         }
       } catch (error) {
         console.error('Gagal mengambil data:', error);
@@ -79,24 +88,18 @@ const BankSampah = () => {
       status: 'pending',
     };
 
-    console.log(payload); // Periksa payload sebelum dikirim
+    console.log(payload); 
+
+
     try {
       setIsProcessing(true);
-      await axios.post(`${API_URL}/penukaran`, payload);
-    } catch (error) {
-      console.error('Payload yang dikirim:', payload);
-      console.error('Gagal memproses data:', error);
-    }
-
-    try {
-      setIsProcessing(true); // Set status sedang diproses
-      const response = await axios.post(`${API_URL}/penukaran`, payload); // Kirim data ke backend
+      const response = await axios.post(`${API_URL}/penukaran`, payload);
 
       Swal.fire('Sukses', 'Data berhasil diproses!', 'success');
-      console.log('Response:', response.data); // Log respons dari backend
-      setCanProcess(false); // Nonaktifkan tombol "Proses"
-      setResult(null); // Reset hasil perhitungan
-      setWeight(''); // Reset input berat
+      console.log('Response:', response.data); 
+      setCanProcess(false);
+      setResult(null); 
+      setWeight('');
     } catch (error) {
       console.error('Gagal memproses data:', error);
       Swal.fire('Error', 'Terjadi kesalahan saat memproses data.', 'error');
@@ -108,8 +111,8 @@ const BankSampah = () => {
 
 
   return (
-    <div className="p-8 h-[100vh]">
-      <h1 className="text-3xl font-bold mb-4">Bank Sampah</h1>
+    <div className="mx-auto max-w-[80vw] min-h-screen ">
+      <h1 className="text-3xl font-bold my-8 text-center">Bank Sampah</h1>
 
       {/* Menampilkan Nama dan Poin di bawah H1 */}
       {user && (
@@ -205,7 +208,7 @@ const BankSampah = () => {
         <button
           type="button"
           onClick={handleProcess}
-          disabled={isProcessing} // Nonaktifkan saat sedang diproses
+          disabled={isProcessing}
           className={`bg-blue-500 text-white px-4 py-2 rounded shadow-md ${isProcessing ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
             }`}
         >

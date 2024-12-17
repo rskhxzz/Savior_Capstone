@@ -74,7 +74,7 @@ const App = () => {
           <Route path="/about" element={<><Navbars /><About /><Footers /></>} />
           <Route path="/akun" element={
             <ProtectedRoute>
-              <><Navbars /><Akun /><Footers /></>
+              <><Navbars /><Akun /></>
             </ProtectedRoute>
           } />
 

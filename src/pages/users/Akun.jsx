@@ -27,11 +27,11 @@ const Akun = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center py-10 bg-cover bg-center bg-no-repeat"
+      className="h-screen flex flex-col items-center pt-10 bg-cover bg-center bg-no-repeat mx-auto"
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
-      <div className="rounded-xl p-6 max-w-md w-full relative bg-white/20 backdrop-blur-md">
-        <h1 className="text-2xl font-bold text-gray-200 mb-4">Profil Akun</h1>
+      <div className="rounded-xl p-6 max-w-md w-full relative bg-[#ffffffb5] backdrop-blur-md">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Profil Akun</h1>
         <button
           className={`absolute top-4 right-4 text-white px-4 py-2 rounded flex items-center gap-2 ${
             isEditing ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'
@@ -79,7 +79,7 @@ const Akun = () => {
                       name={key}
                       value={editedData[key] || ''}
                       onChange={handleInputChange}
-                      className="border rounded w-full p-2 mt-1"
+                      className="rounded-lg w-full p-2 mt-1 bg-[#ffffffe4] backdrop-blur-xl placeholder-gray-400 text-black"
                     />
                   )
                 ) : (
