@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Spinners from '../../components/Spinners';
 import { getTokoData } from '../../script/data/api-endpoint';
 import API_URL from '../../script/data/config';
-import Swal from 'sweetalert2';  // Pastikan SweetAlert2 diimport
+import Swal from 'sweetalert2';
 
 const Toko = () => {
   const [dataToko, setDataToko] = useState([]);
@@ -90,7 +90,6 @@ const Toko = () => {
     const pointsUsed = barang.harga;
     const updatedPoints = userPoints - pointsUsed;
 
-    // Konfirmasi SweetAlert2 sebelum melanjutkan pembelian
     const result = await Swal.fire({
       title: 'Konfirmasi Pembelian',
       text: `Apakah Anda yakin ingin membeli ${barang.nama} dari ${toko.nama} seharga Rp${barang.harga}?`,
@@ -135,8 +134,9 @@ const Toko = () => {
 
         Swal.fire({
           title: 'Pembelian Berhasil',
-          text: `Pembelian ${barang.nama} berhasil! Poin Anda sekarang: ${updatedPoints}`,
+          text: `Pembelian ${barang.nama} berhasil! Silakan datang ke toko`,
           icon: 'success',
+          confirmButtonColor: '#28a745', 
         });
 
         setDataToko((prevData) =>
@@ -176,7 +176,7 @@ const Toko = () => {
 
   return (
     <div className="container mx-auto max-w-[80vw] min-h-screen">
-      <h1 className="text-3xl font-bold text-center my-8">Daftar Toko</h1>
+      <h1 className="text-3xl font-bold text-center my-8">Toko</h1>
       <div className="mb-4 text-center">
         <p className="text-lg">Poin Anda: {userPoints}</p>
       </div>

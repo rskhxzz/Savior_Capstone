@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -49,7 +50,6 @@ const PelaporanForm = () => {
         reportData
       );
 
-      // Menggunakan SweetAlert untuk notifikasi sukses
       Swal.fire({
         title: 'Laporan berhasil dikirim!',
         text: 'Laporan berhasil dikirim!',
@@ -57,7 +57,6 @@ const PelaporanForm = () => {
         timer: 2000,
       });
 
-      // Reset form setelah sukses
       setTitle('');
       setAddress('');
       setDescription('');
@@ -75,10 +74,8 @@ const PelaporanForm = () => {
 
   return (
     <div className="max-w-lg mx-auto px-8 py-8 my-12 bg-white rounded-lg shadow-md relative">
-      {/* Tampilkan spinner saat proses upload berlangsung */}
       {uploading && <Spinners />}
 
-      {/* Konten form */}
       <h1 className="text-2xl font-bold mb-4">Form Laporan</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

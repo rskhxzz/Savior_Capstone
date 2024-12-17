@@ -3,16 +3,18 @@ import { fetchBankSampahData } from '../../script/data/api-endpoint';
 import Swal from 'sweetalert2'; // Import SweetAlert2
 import API_URL from '../../script/data/config';
 import axios from 'axios';
+import { Slide1 } from '../../components/Slides';
 
 const BankSampah = () => {
   const [bankSampah, setBankSampahData] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [weight, setWeight] = useState('');
-  const [user, setUser] = useState(null); // Untuk menyimpan data user yang login
-  const [result, setResult] = useState(null); // Menyimpan hasil perhitungan
-  const [isProcessing, setIsProcessing] = useState(false); // Menyimpan status apakah sedang diproses
-  const [canProcess, setCanProcess] = useState(false); // Tombol "Proses"
+  const [user, setUser] = useState(null);
+  const [result, setResult] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [canProcess, setCanProcess] = useState(false);
+  const [showSlide1, setShowSlide1] = useState(false);
 
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const BankSampah = () => {
       status: 'pending',
     };
 
-    console.log(payload); 
+    console.log(payload);
 
 
     try {
@@ -96,9 +98,9 @@ const BankSampah = () => {
       const response = await axios.post(`${API_URL}/penukaran`, payload);
 
       Swal.fire('Sukses', 'Data berhasil diproses!', 'success');
-      console.log('Response:', response.data); 
+      console.log('Response:', response.data);
       setCanProcess(false);
-      setResult(null); 
+      setResult(null);
       setWeight('');
     } catch (error) {
       console.error('Gagal memproses data:', error);
@@ -108,13 +110,23 @@ const BankSampah = () => {
     }
   };
 
-
+  // handle clode modal
+  const handleCloseModal = (e) => {
+    if (e.target.id === "modal-background") {
+      setShowSlide1(false);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-[80vw] min-h-screen ">
       <h1 className="text-3xl font-bold my-8 text-center">Bank Sampah</h1>
+      <button
+        onClick={() => setShowSlide1(true)}
+        className="bg-blue-500 text-white px-4 py-2 my-2 rounded shadow-md hover:bg-blue-600"
+      >
+        Petunjuk
+      </button>
 
-      {/* Menampilkan Nama dan Poin di bawah H1 */}
       {user && (
         <div className="text-xl mb-6">
           <p><strong>Nama:</strong> {user.name}</p>
@@ -124,7 +136,6 @@ const BankSampah = () => {
 
       <p className="mb-6">Pilih bank sampah, jenis sampah, dan masukkan berat untuk menghitung pendapatan.</p>
 
-      {/* Pilih Bank Sampah */}
       <div className="mb-4">
         <label className="block font-semibold mb-2">Pilih Tempat:</label>
         <select
@@ -143,7 +154,6 @@ const BankSampah = () => {
         </select>
       </div>
 
-      {/* Pilih Jenis Sampah */}
       <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
         <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="category">
@@ -165,7 +175,6 @@ const BankSampah = () => {
           </select>
         </div>
 
-        {/* Input Berat */}
         <div className="mb-4">
           <label className="block font-semibold mb-2" htmlFor="berat">
             Masukkan Berat (kg):
@@ -176,8 +185,7 @@ const BankSampah = () => {
             className="border p-2 rounded w-full"
             value={weight}
             onChange={(e) => {
-              // Pastikan input hanya bernilai positif
-              const value = Math.max(0, e.target.value); // Membatasi nilai minimum 0
+              const value = Math.max(0, e.target.value);
               setWeight(value);
             }}
             placeholder="Masukkan berat dalam kg"
@@ -185,7 +193,6 @@ const BankSampah = () => {
           />
         </div>
 
-        {/* Tombol Hitung */}
         <button
           type="button"
           onClick={handleCalculate}
@@ -195,7 +202,6 @@ const BankSampah = () => {
         </button>
       </form>
 
-      {/* Hasil */}
       {result && !isProcessing && (
         <div className="mt-6 p-4 bg-blue-100 rounded shadow">
           <p className="text-blue-800 font-semibold">
@@ -203,7 +209,7 @@ const BankSampah = () => {
           </p>
         </div>
       )}
-      {/* Tombol Proses */}
+
       {canProcess && (
         <button
           type="button"
@@ -215,7 +221,24 @@ const BankSampah = () => {
           {isProcessing ? 'Memproses...' : 'Proses'}
         </button>
       )}
-
+      {/* Modal untuk Slide 1 */}
+      {showSlide1 && (
+        <div
+          id="modal-background"
+          onClick={handleCloseModal} // Menangani klik di luar modal
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
+        >
+          <div className=" rounded-lg p-8 max-w-[95vw] max-h-[80vh] overflow-auto">
+            <button
+              onClick={() => setShowSlide1(false)}
+              className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full shadow-md"
+            >
+              ✕
+            </button>
+            <Slide1 />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

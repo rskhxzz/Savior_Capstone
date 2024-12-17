@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Import React Router
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbars from './components/Navbars';
 import Hero from './components/Hero';
 import Features from './components/Features';
-import BankSampah from './pages/users/BankSampah'; // Halaman untuk fitur Bank Sampah
-import Toko from './pages/users/Toko'; // Halaman untuk fitur Toko
+import BankSampah from './pages/users/BankSampah';
+import Toko from './pages/users/Toko';
 import Pelaporan from './pages/users/Pelaporan';
 import Chat from './pages/users/Chat';
 import About from './pages/users/About';
@@ -14,7 +14,8 @@ import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import Akun from './pages/users/Akun';
 import { Footers } from './components/Footers';
-import AuthLayout from './layouts/AuthLayout'; // Import AuthLayout
+import AuthLayout from './layouts/AuthLayout';
+import History from './pages/users/History';
 
 // Define ProtectedRoute component
 // eslint-disable-next-line react/prop-types
@@ -81,6 +82,11 @@ const App = () => {
           <Route path="/lokasi" element={
             <ProtectedRoute>
               <><Navbars /><Lokasi /><Footers /></>
+            </ProtectedRoute>
+          } />
+          <Route path="/history" element={
+            <ProtectedRoute>
+              <><Navbars /><History /><Footers /></>
             </ProtectedRoute>
           } />
 

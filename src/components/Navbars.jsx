@@ -44,9 +44,8 @@ const Navbars = () => {
           </svg>
         </button>
         <ul
-          className={`md:flex space-x-6 text-[#F4E0AF] font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50  ${
-            isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'
-          }`}
+          className={`md:flex space-x-6 text-[#F4E0AF] font-semibold absolute md:static top-16 left-0 right-0 bg-white md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50  ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'
+            }`}
         >
           <li>
             <Link to="/bank-sampah" onClick={() => setIsOpen(false)}>
@@ -66,6 +65,11 @@ const Navbars = () => {
           <li>
             <Link to="/about" onClick={() => setIsOpen(false)}>
               About
+            </Link>
+          </li>
+          <li>
+            <Link to="/history" onClick={() => setIsOpen(false)}>
+              riwayat
             </Link>
           </li>
           <li>
