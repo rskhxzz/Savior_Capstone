@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 
 const WeatherDisplay = ({
@@ -35,7 +37,6 @@ const WeatherDisplay = ({
     getLocation();
   }, []);
 
-  // Fetch data cuaca dari API setelah mendapatkan lokasi
   useEffect(() => {
     const fetchWeather = async () => {
       if (location.lat != null && location.lng != null) {
