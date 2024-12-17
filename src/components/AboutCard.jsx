@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import Images1 from "../assets/images/grid-images/1.png";
+import Images1 from "../assets/images/team/images1.jpg";
+import Images2 from "../assets/images/team/images2.jpg";
+import Images3 from "../assets/images/team/images3.jpg";
+import Images4 from "../assets/images/team/images4.png";
 
 const aboutCards = [
   {
@@ -12,21 +15,21 @@ const aboutCards = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel diam vel ipsum condimentum feugiat non vel turpis. Nulla facilisi. Donec vel justo vel velit consectetur facilisis.",
   },
   {
-    Image: Images1,
+    Image: Images2,
     Name: "Muhammad Wildanu Staifen",
     Position: "Front-End Developer",
     Description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel diam vel ipsum condimentum feugiat non vel turpis. Nulla facilisi. Donec vel justo vel velit consectetur facilisis.",
   },
   {
-    Image: Images1,
+    Image: Images3,
     Name: "Muhammad Zulvan",
     Position: "Front-End Developer",
     Description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel diam vel ipsum condimentum feugiat non vel turpis. Nulla facilisi. Donec vel justo vel velit consectetur facilisis.",
   },
   {
-    Image: Images1,
+    Image: Images4,
     Name: "Zainal Azhab",
     Position: "Back-End Developer",
     Description:
