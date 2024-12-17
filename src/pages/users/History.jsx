@@ -1,9 +1,8 @@
-import React from 'react'
+/* eslint-disable no-unused-vars */
+import  { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import axios from 'axios';
 
 const History = () => {
-  return (
-    <div>History</div>
-  )
-}
 
-export default History
+export default History;

@@ -65,7 +65,7 @@ const Navbars = () => {
           </li>
           <li>
             <Link to="/about" onClick={() => setIsOpen(false)}>
-              Tentang
+              About
             </Link>
           </li>
           <li>
