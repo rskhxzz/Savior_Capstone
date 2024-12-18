@@ -7,9 +7,9 @@ import Spinners from '../../components/Spinners';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false); // State untuk kontrol spinner
+    const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
-    const [user, setUser] = useState(null); // Menyimpan data user setelah login
+    const [user, setUser] = useState(null);
 
     const fetchUserData = async (userId) => {
         try {
@@ -19,32 +19,29 @@ const Login = () => {
                 },
             });
             console.log("Fetched user data:", response.data);
-            return response.data; // Mengembalikan semua data pengguna
+            return response.data; 
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
     };
 
     useEffect(() => {
-        // Jika user ada, mulai interval untuk memperbarui data pengguna
         if (user) {
             const intervalId = setInterval(async () => {
                 const updatedData = await fetchUserData(user.id);
                 if (updatedData && JSON.stringify(updatedData) !== JSON.stringify(user)) {
                     localStorage.setItem('user', JSON.stringify(updatedData));
-                    setUser(updatedData); // Memperbarui state user
+                    setUser(updatedData); 
                 }
-            }, 5000); // Memperbarui data setiap 1 detik
+            }, 5000); 
 
-            // Membersihkan interval saat komponen di-unmount
             return () => clearInterval(intervalId);
         }
-    }, [user]); // Hanya akan dipanggil ketika user berubah
+    }, [user]); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        setLoading(true); // Aktifkan spinner sebelum melakukan request
+        setLoading(true);
 
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, {
@@ -84,7 +81,7 @@ const Login = () => {
                 toast.error('Login gagal. Silakan coba lagi.');
             }
         } finally {
-            setLoading(false); // Nonaktifkan spinner setelah selesai
+            setLoading(false);
         }
     };
 

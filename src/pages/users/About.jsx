@@ -3,8 +3,8 @@ import AboutCard from "../../components/AboutCard";
 const About = () => {
   return (
     <div className="p-8">
-      <div className="max-w-[70vw] mx-auto my-12 text-lg bg-slate-200 p-8 rounded-xl">
-        <h1 className="text-4xl font-bold text-center mb-8">Savior</h1>
+      <div className="max-w-[80vw] mx-auto my-12 text-sm md:text-lg bg-slate-200 p-8 rounded-xl">
+        <h1 className="text-2xl md:text-4xl font-bold text-center mb-8">Savior</h1>
         <p>
           Savior adalah inisiatif inovatif yang bertujuan untuk mengatasi permasalahan sampah di Kota Surabaya. Platform digital kami memungkinkan masyarakat untuk menukarkan sampah yang mereka kumpulkan menjadi mata uang digital yang dapat digunakan untuk membeli berbagai kebutuhan pokok di jaringan toko kami. Dengan demikian, Savior tidak hanya mendorong pengelolaan sampah yang lebih baik, tetapi juga memberikan nilai tambah bagi masyarakat. Kolaborasi kami dengan Dinas Lingkungan Hidup Kota Surabaya semakin memperkuat komitmen kami untuk menciptakan lingkungan yang lebih bersih dan berkelanjutan.
         </p>
