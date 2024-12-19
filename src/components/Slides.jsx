@@ -1,10 +1,10 @@
 const Slide1 = () => {
     return (
-        <div className="p-8 flex flex-col justify-center items-center text-white bg-blue-500 rounded-lg h-full">
-            <h2 className="text-xl font-bold mb-4">
+        <div className="p-8 flex flex-col justify-center items-center text-white bg-blue-500 rounded-lg max-h-full mx-auto">
+            <h2 className="text:md lg:text-xl font-bold mb-4">
                 Bagaimana cara melakukan penukaran sampah?
             </h2>
-            <ul className="relative border-l border-gray-300 pl-4 space-y-6">
+            <ul className="text-sm lg-text-md relative border-l border-gray-300 pl-4 space-y-6">
                 {[
                     "Datang ke bank sampah",
                     "Kunjungi halaman bank sampah pada web.",
@@ -27,11 +27,11 @@ const Slide1 = () => {
 
 const Slide2 = () => {
     return (
-        <div className="p-8 flex flex-col justify-center items-center text-white bg-blue-500 rounded-lg h-full">
-            <h2 className="text-xl font-bold mb-4">
+        <div className="p-8 flex flex-col justify-center items-center text-white bg-blue-500 rounded-lg max-h-full">
+            <h2 className="text:md lg:text-xl font-bold mb-4">
                 Cara pembelian sembako dengan uang digital
             </h2>
-            <ul className="relative border-l border-gray-300 pl-4 space-y-6">
+            <ul className="text-sm lg-text-md relative border-l border-gray-300 pl-4 space-y-6">
                 {[
                     "Datang ke toko yang sudah bekerja sama dengan kami.",
                     "Kunjungi halaman toko pada web.",

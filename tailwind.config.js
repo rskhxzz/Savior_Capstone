@@ -16,6 +16,7 @@ export default {
       },
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
+        montserrat: ['Montserrat', 'Poppins', 'Quicksand'],
       },
     },
   },
