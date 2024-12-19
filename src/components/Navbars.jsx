@@ -53,7 +53,7 @@ const Navbars = () => {
           </svg>
         </button>
         <ul
-          className={`gap-8 pl-4 text-left text-[#355F2E] font-semibold absolute md:flex md:static top-16 left-0 right-0 bg-[#dfdfdf] md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50 ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'}`}
+          className={`gap-8 pl-4 text-left text-[#355F2E] text-md xl:text-lg font-semibold absolute md:flex md:static top-16 left-0 right-0 bg-[#dfdfdf] md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50 ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'}`}
         >
           <li className="hover:bg-gray-400 p-2 rounded-md transition-colors duration-300">
             <Link to="/" onClick={() => setIsOpen(false)}>
