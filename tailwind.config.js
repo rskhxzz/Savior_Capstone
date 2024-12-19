@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
-const flowbite = require("flowbite-react/tailwind");
+import flowbite from "flowbite-react/tailwind";
+import textShadowPlugin from "tailwindcss-textshadow";
 
 export default {
   content: [
@@ -21,8 +22,7 @@ export default {
     },
   },
   plugins: [
-    require('tailwindcss-textshadow'),
+    textShadowPlugin,
     flowbite.plugin(),
   ],
-}
-
+};
