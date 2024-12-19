@@ -10,7 +10,7 @@ import Images4 from "../assets/images/team/images4.png";
 const aboutCards = [
   {
     Image: Images1,
-    Name: "M Rasikh Fi Ilmi",
+    Name: "Muhamad Raasikh Fil’ilmi",
     Position: "Project Manager",
     Description:
       "Hi everyone! Saya Muhamad Raasikh Fil'ilmi mahasiswa S1 Teknik Informatika di Universitas Negeri Surabaya dengan keahlian di bidang web development (HTML, JavaScript, CSS, UI/UX, Python, Laravel), serta public speaking, kepemimpinan, manajemen acara, analisis data, dan kemampuan berbahasa Inggris. Saya juga memiliki minat di bidang UI/UX Designer, Business Development, Project Management, serta Systems dan Data Analyst.",
@@ -22,27 +22,27 @@ const aboutCards = [
     Name: "Muhammad Wildanu Staifen",
     Position: "Front-End Developer",
     Description:
-      "Hai, saya Muhammad Wildanu Staifen  mahasiswa  di Universitas AMIKOM Yogyakarta . Saya memiliki ketertarikan  pengembangan front-end dengan HTML, CSS, JavaScript maupun library atau framework lain. Saya terus belajar dan beradaptasi dengan teknologi terbaru . Selain itu, saya juga memiliki pemahaman tentang Express.js dan database MySQL serta PostgreSQL. Saya sangat tertarik untuk terlibat dalam berbagai dan terus mengembangkan kemampuan saya di bidang pengembangan web.",
+      "Hai, saya Muhammad Wildanu Staifen  mahasiswa  di Universitas AMIKOM Yogyakarta . Saya memiliki ketertarikan  pengembangan front-end dengan HTML, CSS, JavaScript maupun library atau framework seperti react, tailwind, bootstrap, dan next. Saya terus belajar dan beradaptasi dengan teknologi terbaru. Selain itu, saya juga memiliki pemahaman tentang Express.js dan database MySQL serta PostgreSQL. Saya sangat tertarik untuk terlibat dalam berbagai dan terus mengembangkan kemampuan saya di bidang pengembangan web.",
     Github: "https://github.com/wildanre",
     Instagram: "https://instagram.com/threadripper_000",
   },
   {
     Image: Images3,
-    Name: "Muhammad Zulvan",
+    Name: "Muhamad Zulfan Mizan Khoir",
     Position: "Front-End Developer",
     Description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel diam vel ipsum condimentum feugiat non vel turpis. Nulla facilisi. Donec vel justo vel velit consectetur facilisis.",
+      "Hai!, saya Muhamad Zulfan Mizan Khoir mahasiswa S1 Informatika di Universitas Jember dengan minat besar dalam dunia web development. Saya memiliki pemahaman yang baik tentang HTML, CSS, dan JavaScript. Sebagai mahasiswa ilmu komputer, saya selalu bersemangat untuk memperluas pengetahuan di dunia teknologi, terutama dalam bidang pengembangan web.",
     Github: "https://github.com/zulfanmiz_",
     Instagram: "https://instagram.com/zulfanMk",
   },
   {
     Image: Images4,
-    Name: "Zainal Azhab",
+    Name: "Zainul Ahbab",
     Position: "Back-End Developer",
     Description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel diam vel ipsum condimentum feugiat non vel turpis. Nulla facilisi. Donec vel justo vel velit consectetur facilisis.",
-    Github: "https://github.com/zainalazhab",
-    Instagram: "https://instagram.com/zainalazhab",
+      "Halo, saya Zainul Ahbab, mahasiswa S1 Informatika di Universitas KH. Bahauddin Mudhary Madura. Saya memiliki minat besar dalam dunia teknologi informasi, khususnya di bidang pengembangan web. Saya memahami dan memiliki pengalaman dalam menggunakan HTML, CSS, JavaScript, PHP, dan framework Laravel untuk membangun aplikasi web yang interaktif dan fungsional. Sebagai seorang mahasiswa, saya selalu bersemangat untuk belajar hal-hal baru, mengasah keterampilan saya, dan mengeksplorasi inovasi di dunia digital. Saya juga memiliki ketertarikan untuk mendalami bidang UI/UX, manajemen proyek, serta analisis data guna meningkatkan keahlian saya di dunia teknologi",
+    Github: "https://github.com/zainul-ahbab",
+    Instagram: "https://instagram.com/zzainn_a",
   },
 ];
 
