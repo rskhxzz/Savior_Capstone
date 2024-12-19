@@ -11,7 +11,7 @@ const aboutCards = [
   {
     Image: Images1,
     Name: "Muhamad Raasikh Fil’ilmi",
-    Position: "Project Manager",
+    Position: "Project Manager dan Back-End Developer",
     Description:
       "Hi everyone! Saya Muhamad Raasikh Fil'ilmi mahasiswa S1 Teknik Informatika di Universitas Negeri Surabaya dengan keahlian di bidang web development (HTML, JavaScript, CSS, UI/UX, Python, Laravel), serta public speaking, kepemimpinan, manajemen acara, analisis data, dan kemampuan berbahasa Inggris. Saya juga memiliki minat di bidang UI/UX Designer, Business Development, Project Management, serta Systems dan Data Analyst.",
     Github: "https://github.com/rskhxzz",
