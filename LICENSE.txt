@@ -1,6 +1,11 @@
 MIT License
 
 Copyright (c) 2024 rskhxzz
+our team:
+Muhamad Raasikh Fil’ilmi
+Muhammad Wildanu Staifen
+Zainul Ahbab
+Muhamad Zulfan Mizan Khoir
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
