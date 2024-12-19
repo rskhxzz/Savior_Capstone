@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { RiArrowDropDownLine } from "react-icons/ri";
+import logo from '../assets/savior-icon.png'
 
 const Navbars = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,13 +17,15 @@ const Navbars = () => {
   };
 
   return (
-    <nav className="bg-[#355F2E] shadow-md z-50 ">
-      <div className="container mx-auto px-4 py-3 min-h-16 flex justify-between items-center">
+    <nav className="bg-[#dfdfdf] shadow-md z-50 ">
+      <div className="container mx-auto px-4  min-h-16 flex justify-between items-center">
         <div className="text-xl font-bold">
-          <Link to="/">SAVIOR</Link>
+          <Link to="/">
+            <img src={logo} className='w-12 h-12' alt="Savior" />
+          </Link>
         </div>
         <button
-          className="text-gray-700 md:hidden focus:outline-none"
+          className="text-[#355F2E]} md:hidden focus:outline-none"
           onClick={toggleMenu}
         >
           <svg
@@ -49,52 +53,53 @@ const Navbars = () => {
           </svg>
         </button>
         <ul
-          className={`md:flex space-x-6 text-[#e9e9e9] font-semibold absolute md:static top-16 left-0 right-0 bg-[#355F2E] md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50 ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'}`}
+          className={`gap-8 pl-4 text-left text-[#355F2E] font-semibold absolute md:flex md:static top-16 left-0 right-0 bg-[#dfdfdf] md:bg-transparent md:space-y-0 space-y-4 md:flex-row flex-col items-center z-50 ${isOpen ? 'block slide-down' : 'hidden slide-up md:slide-none'}`}
         >
-          <li>
+          <li className="hover:bg-gray-400 p-2 rounded-md transition-colors duration-300">
             <Link to="/" onClick={() => setIsOpen(false)}>
               Beranda
             </Link>
           </li>
-          <li className="relative">
+          <li className="relative transition-colors duration-300">
             <button
-              className="text-[#e9e9e9] font-semibold"
+              className="text-[#355F2E]  hover:bg-gray-400 p-2 rounded-md font-semibold flex flex-start items-center transition-colors duration-300"
               onClick={toggleDropdown}
             >
               Fitur
+              <RiArrowDropDownLine className="text-3xl" />
             </button>
             <ul
               className={`${isDropdownOpen ? 'block' : 'hidden'
-                } absolute bg-[#355F2E] shadow-md space-y-4 p-4 mt-2 rounded-md w-48 left-0 top-full z-10`}
+                } absolute bg-[#dfdfdf] shadow-md space-y-4 p-4 mt-2  rounded-md w-48 left-0 top-full z-10`}
             >
-              <li>
+              <li className="hover:bg-gray-400 p-1 rounded-md transition-colors duration-300">
                 <Link to="/bank-sampah" onClick={() => setIsOpen(false)}>
                   Bank Sampah
                 </Link>
               </li>
-              <li>
+              <li className="hover:bg-gray-400 p-1 rounded-md transition-colors duration-300">
                 <Link to="/toko" onClick={() => setIsOpen(false)}>
                   Toko
                 </Link>
               </li>
-              <li>
+              <li className="hover:bg-gray-400 p-1 rounded-md transition-colors duration-300">
                 <Link to="/pelaporan" onClick={() => setIsOpen(false)}>
                   Pelaporan
                 </Link>
               </li>
             </ul>
           </li>
-          <li>
+          <li className="hover:bg-gray-400 p-2 rounded-md transition-colors duration-300">
             <Link to="/history" onClick={() => setIsOpen(false)}>
               Riwayat
             </Link>
           </li>
-          <li>
+          <li className="hover:bg-gray-400 p-2 rounded-md transition-colors duration-300">
             <Link to="/about" onClick={() => setIsOpen(false)}>
               Tentang
             </Link>
           </li>
-          <li>
+          <li className="hover:bg-gray-400 p-2 rounded-md transition-colors duration-300">
             <Link to="/akun" onClick={() => setIsOpen(false)}>
               Akun
             </Link>
