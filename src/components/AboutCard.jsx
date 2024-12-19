@@ -14,7 +14,7 @@ const aboutCards = [
     Name: "M Rasikh Fi Ilmi",
     Position: "Project Manager",
     Description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel diam vel ipsum condimentum feugiat non vel turpis. Nulla facilisi. Donec vel justo vel velit consectetur facilisis.",
+      "Hi everyone! Saya Muhamad Raasikh Fil'ilmi mahasiswa S1 Teknik Informatika di Universitas Negeri Surabaya dengan keahlian di bidang web development (HTML, JavaScript, CSS, UI/UX, Python, Laravel), serta public speaking, kepemimpinan, manajemen acara, analisis data, dan kemampuan berbahasa Inggris. Saya juga memiliki minat di bidang UI/UX Designer, Business Development, Project Management, serta Systems dan Data Analyst.",
     Github: "https://github.com/rskhxzz",
     Instagram: "https://instagram.com/raasikh.fiy",
   },
