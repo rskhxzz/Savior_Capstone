@@ -42,7 +42,7 @@ const Features = () => {
   return (
     <div className="bg-gray-200 py-12 flex ">
       <div className="container mx-auto px-12 min-h-[70vh] max-w-[90vw]">
-        <h2 className="text-3xl font-bold text-[#355F2E] my-8 text-center">Temukan Fitur Kami</h2>
+        <h2 className="text-xl md:text-2xl xl:text-3xl font-bold text-[#355F2E] my-8 text-center">Temukan Fitur Kami</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <Link to={feature.path} key={index} className="block">
@@ -52,7 +52,7 @@ const Features = () => {
                   alt={feature.title}
                   className="w-16 h-16 mx-auto mb-4"
                 />
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+                <h3 className="text-lg lg-text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
                 <p className="text-gray-700">{feature.description}</p>
               </div>
             </Link>

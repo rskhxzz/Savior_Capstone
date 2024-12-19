@@ -17,8 +17,8 @@ const Hero = () => {
             WebkitBackdropFilter: 'blur(7px)',
             backdropFilter: 'blur(7px)',
           }}>
-          <h1 className="text-4xl font-bold text-white mb-4">SAVIOR</h1>
-          <p className="text-white mb-6 max-w-xl">
+          <h1 className="text-3xl xl:text-4xl font-bold text-white mb-4">SAVIOR</h1>
+          <p className="text-md lg:text-lg text-gray-200 mb-6 max-w-xl">
             situs ini merupakan situs untuk menukarkan sampah menjadi uang digital yang dapat digunakan untuk membeli kebutuhan pokok di toko kami. Savior bekerja sama dengan Dinas Lingkungan hidup kota Surabaya
           </p>
         </div>
