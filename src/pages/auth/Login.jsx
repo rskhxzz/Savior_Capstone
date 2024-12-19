@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import Spinners from '../../components/Spinners';
+import logo from '../../assets/savior-icon.png'
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -57,7 +58,7 @@ const Login = () => {
             if (message === 'Login successful.') {
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('user', JSON.stringify(user));
-                setUser(user); // Menyimpan data user di state
+                setUser(user);
 
                 toast.success(`Selamat datang ${user.name}!`);
 
@@ -88,10 +89,10 @@ const Login = () => {
 
     return (
         <div className="relative flex flex-col h-screen w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto my-20 px-20 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl shadow-xl">
-            {loading && <Spinners />} {/* Aktifkan spinner jika loading true */}
+            {loading && <Spinners />}
             <div className="flex flex-col justify-center mx-auto items-center gap-3 pb-4">
                 <div>
-                    <img src="src/assets/savior-icon.png" alt="Logo" width="100" />
+                    <img src={logo} alt="Logo" width="100" />
                 </div>
                 <h1 className="text-3xl font-bold text-[#4B5563] my-auto">SAVIOR</h1>
             </div>
