@@ -37,10 +37,10 @@ const Slide2 = () => {
                     "Kunjungi halaman toko pada web.",
                     "Pilih toko yang dituju.",
                     "Pilih barang yang akan dibeli.",
-                    "Klik beli.",
+                    "Klik beli, dan silahkan ke toko",
                     "Pihak toko akan segera menyiapkan barangnya dan melakukan konfirmasi.",
-                    "Terus kita ambil.",
-                    "Kami sangat menyarankan untuk melakukan pembelian sembako di toko.",
+                    "Kemudian ambil.",
+                    "Kami sangat menyarankan untuk melakukan pembelian sembako ketika di toko.",
                 ].map((text, index) => (
                     <li key={index} className="mb-6 ml-4">
                         <div className="absolute -left-2 w-4 h-4 bg-blue-500 rounded-full border border-white"></div>
