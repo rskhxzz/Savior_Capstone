@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { FiSend } from "react-icons/fi";
 import { requestToGroqAi, formatText } from '../../script/utils/ChatHandler';
 
 const Chat = () => {
@@ -7,26 +7,25 @@ const Chat = () => {
   const [messages, setMessages] = useState([]); // State untuk histori percakapan
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Mencegah form submit default
+    e.preventDefault();
 
     // Menyimpan pesan pengguna ke dalam histori percakapan
     setMessages([...messages, { role: 'user', content }]);
 
-    const ai = await requestToGroqAi(content); // Menggunakan state content untuk mendapatkan jawaban AI
+    const ai = await requestToGroqAi(content); 
 
-    // Menyimpan jawaban AI ke dalam histori percakapan
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: 'ai', content: ai },
     ]);
 
-    setContent(''); // Reset input setelah submit
+    setContent('');
   };
 
   return (
     <main className="flex flex-col min-h-screen justify-end items-center bg-white py-1 border-2 px-8">
-      <h1 className="text-3xl font-bold text-green-600 mb-1">Hi Savior</h1>
-      <p className="text-md text-green-700 mb-1">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-green-600 mb-1">Hi Savior</h1>
+      <p className=" text-md text-green-700 mb-1 text-center">
         punya pertanyaan terkait lingkungan? tanyakan Hi savior
       </p>
 
@@ -67,7 +66,7 @@ const Chat = () => {
         >
           <input
             placeholder="Tanyakan pertanyaanmu tentang lingkungan"
-            className="border-2 border-green-500 rounded-lg px-4 py-2 text-md focus:outline-none focus:ring-1 focus:ring-green-500 w-full"
+            className="border-2 border-green-500 rounded-lg px-4 py-2 text-sm lg:text-md focus:outline-none focus:ring-1 focus:ring-green-500 w-full"
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -77,7 +76,7 @@ const Chat = () => {
             type="submit"
             className="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-600 transition duration-200"
           >
-            Kirim
+            <FiSend size={24} />
           </button>
         </form>
       </div>
