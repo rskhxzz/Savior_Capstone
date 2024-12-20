@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
-import 'aos/dist/aos.css'; // AOS Stylesheet
+import 'aos/dist/aos.css';
+import { Link } from 'react-router-dom';
 import imageGrid1 from '../assets/images/grid-images/1.png';
 import imageGrid2 from '../assets/images/grid-images/2.png';
 import imageGrid3 from '../assets/images/grid-images/3.png';
