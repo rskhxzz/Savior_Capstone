@@ -19,24 +19,37 @@ const Toko = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Ambil data toko
         const result = await getTokoData();
         setDataToko(result);
+
+        // Ambil data user dari localStorage
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          setUserPoints(userData.point); // Menyimpan poin user dari localStorage
+
+          // Memanggil API untuk mengambil data user berdasarkan userId
+          const userId = userData.id;
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/users/${userId}`);
+          if (response.ok) {
+            const userFromApi = await response.json();
+            localStorage.setItem('user', JSON.stringify(userFromApi)); // Update data user di localStorage
+            setUserPoints(userFromApi.point); // Menyimpan poin user dari API
+          } else {
+            throw new Error('Failed to fetch user data');
+          }
+        }
+
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data toko:', error);
+        console.error('Error fetching data:', error);
         setLoading(false);
+        Swal.fire('Error', 'Terjadi kesalahan saat memuat data.', 'error');
       }
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const userData = JSON.parse(storedUser);
-      setUserPoints(userData.point);
-    }
   }, []);
 
   const handleAddToCart = (barang) => {
