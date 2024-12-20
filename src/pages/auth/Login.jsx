@@ -88,7 +88,7 @@ const Login = () => {
     };
 
     return (
-        <div className="relative flex flex-col h-screen w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto my-20 px-20 md:p-10 2xl:p-12 3xl:p-14 bg-[#ffffff] rounded-2xl shadow-xl">
+        <div className="relative flex flex-col max-h-screen w-full md:w-1/2 xl:w-2/5 2xl:w-2/5 3xl:w-1/3 mx-auto my-20 px-20 md:p-10 2xl:p-12 3xl:p-14 bg-[#f4f4f4] rounded-2xl shadow-xl">
             {loading && <Spinners />}
             <div className="flex flex-col justify-center mx-auto items-center gap-3 pb-4">
                 <div>
@@ -144,7 +144,7 @@ const Login = () => {
                     Login
                 </button>
             </form>
-            <div className="text-sm font-light text-[#6B7280] text-center">
+            <div className="text-sm font-light text-[#6B7280] text-center mb-4">
                 Belum punya akun? <a href="/register" className="font-medium text-[#0acf34] hover:underline">Register</a>
             </div>
         </div>
