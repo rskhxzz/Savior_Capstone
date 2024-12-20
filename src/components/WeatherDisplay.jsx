@@ -11,6 +11,7 @@ const WeatherDisplay = ({
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState({ lat: null, lng: null });
+  const [error, setError] = useState(null);
 
   // Fungsi untuk mendapatkan lokasi pengguna
   useEffect(() => {
@@ -24,12 +25,18 @@ const WeatherDisplay = ({
             });
           },
           (error) => {
-
+            // Menangani error jika pengguna menolak atau terjadi masalah dengan lokasi
+            setError("Gagal mendapatkan lokasi. Pastikan lokasi diaktifkan di perangkat Anda.");
             setLoading(false);
+          },
+          {
+            enableHighAccuracy: true, // Memastikan mendapatkan lokasi yang lebih akurat
+            timeout: 5000, // Timeout jika pengambilan lokasi terlalu lama
+            maximumAge: 0, // Jangan menggunakan lokasi yang sudah tersimpan sebelumnya
           }
         );
       } else {
-
+        setError("Geolocation tidak didukung di browser ini.");
         setLoading(false);
       }
     };
@@ -83,12 +90,17 @@ const WeatherDisplay = ({
 
   // Jika sedang memuat data
   if (loading) {
-    return <div className="text-gray-500 absolute"></div>;
+    return <div className="text-gray-500 absolute">Memuat lokasi...</div>;
+  }
+
+  // Jika gagal mengambil lokasi
+  if (error) {
+    return <div className="text-red-500 absolute">{error}</div>;
   }
 
   // Jika gagal memuat data cuaca
   if (!weatherData || weatherData.cod !== 200) {
-    return <div className="text-red-500 absolute"></div>;
+    return <div className="text-red-500 absolute">Gagal memuat data cuaca.</div>;
   }
 
   const { name, main, weather } = weatherData;

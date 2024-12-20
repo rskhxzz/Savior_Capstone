@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css"; // Mengimpor CSS untuk Leaflet
-import locationMark from "../../assets/images/icons/location-mark.png"
+import locationMark from "../../assets/images/icons/location-mark.png";
 
 const Lokasi = () => {
   const [userLocation, setUserLocation] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Mendapatkan lokasi pengguna menggunakan Geolocation API
@@ -17,21 +18,31 @@ const Lokasi = () => {
           setUserLocation([lat, lng]);
         },
         (error) => {
-          console.error("Error mendapatkan lokasi:", error);
+          // Menangani error jika izin lokasi ditolak
+          if (error.code === error.PERMISSION_DENIED) {
+            setError("Izinkan lokasi untuk melanjutkan.");
+          } else {
+            setError("Gagal mendapatkan lokasi. Coba lagi.");
+          }
+        },
+        {
+          enableHighAccuracy: true, // Memastikan mendapatkan lokasi yang lebih akurat
+          timeout: 10000, // Timeout jika pengambilan lokasi terlalu lama
+          maximumAge: 0, // Jangan menggunakan lokasi yang sudah tersimpan sebelumnya
         }
       );
+    } else {
+      setError("Geolocation tidak didukung di browser ini.");
     }
   }, []);
 
-  // Lokasi tambahan (contoh dengan lokasi di Surabaya)
+  // Lokasi tambahan 
   const additionalLocations = [
     { lat: -7.2504, lng: 112.7688, title: "Bank Sampah Surabaya 1" },   // Tugu Pahlawan
     { lat: -7.2575, lng: 112.7521, title: "Bank Sampah Surabaya 2" },    // Taman Bungkul
     { lat: -7.2740, lng: 112.7357, title: "Bank Sampah Surabaya 3" },     // Kebun Binatang Surabaya
     { lat: -7.2650, lng: 112.7485, title: "Bank Sampah Surabaya 4" }, // House of Sampoerna
-
   ];
-  
 
   if (!userLocation) {
     return <div>Loading...</div>; // Tampilkan loading jika lokasi pengguna belum didapatkan
@@ -48,6 +59,9 @@ const Lokasi = () => {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-4">Peta Lokasi</h1>
+
+      {/* Jika ada error */}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
       {/* Peta dengan Leaflet */}
       <MapContainer
